@@ -1,0 +1,68 @@
+player screen: 
+ volume to high
+ back button not working
+ song title getting cut off if too long
+ playlist title getting cut off it too long too probably
+ duration label not being used for anything
+ play and pause buttons not switching between each other
+ repeat button not doing anything
+ shuffle button not doing anything
+ repeat and stuffle buttons not switching between each other or something idk 
+ this whole screen xd
+register screen:
+ account created not dissapearing after some time
+playlist screen:
+ left clicking the empty playlist causes a crash??
+ left click -> listen an empty playlist goes to the player screen and displays default labels
+ returning from other screens causes the tags/playlist lists to return to the original positions
+ settings button doesn't work
+songs screen:
+ returning from other screens causes the columns to return to the orignal widths
+ add something for left clicking a song
+ deletion of a song causes columns to return to the orignal widths
+ elided labels cutting off text from the other side in case of dates
+songs add screen:
+ song added text not dissapearing after some time
+ maybe resetting the line edits after adding
+ reading the song title and maybe authors from filename?
+songs edit screen:
+ edit text not dissapearing after some time
+playlist add screen:
+ no user output text
+playlist songs screen:
+ left click maybe do something
+ removing a song from a playlist causes columns widths to return to the original ones
+playlist songs edit screen:
+ this existing is cringe in itself
+ the same as song edit screen above
+playlist songs add screen:
+ cringe adding songs by using right click -> add
+ not really knowing what song are we adding without highlighting the current one that the cursor is over
+ column sizes changes when the songs get added
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
