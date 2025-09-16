@@ -29,6 +29,9 @@ PlayerScreen::PlayerScreen(QWidget *parent, QSqlDatabase* database, bool isGuest
     connect(player, &QMediaPlayer::positionChanged, this, &updateSongSlider);
     connect(ui->songProgress_s, &QSlider::sliderPressed, this, sliderPressed);
     connect(ui->songProgress_s, &QSlider::sliderReleased, this, sliderReleased);
+    connect(player, &QMediaPlayer::positionChanged, this, [this](){
+        qDebug() << player->position();
+    });
 
     connect(player, &QMediaPlayer::mediaStatusChanged, this, playerStatusChanged);
 }
@@ -102,8 +105,13 @@ void PlayerScreen::songInfoQuery()
 
         player->setSource(QUrl::fromLocalFile(query.value(2).toString()));
         ui->songProgress_s->setMaximum(player->duration());
+
         qDebug() << player->duration();
-        //ui->songProgress_l->setText(player->duration());
+        QString minutes = QString::fromStdString(std::to_string((player->duration()/1000)/60));
+        QString seconds = QString::fromStdString(std::to_string((player->duration()/1000)%60));
+        songLength = minutes + ":" + seconds;
+        //qDebug() << songLength;
+        ui->songProgress_l->setText("00:00/" + songLength);
     }
 }
 
@@ -171,12 +179,12 @@ void PlayerScreen::setVolume()
     // 1   -> whatever we want but close to 0
     // x   -> math :(
 
-    const float volume_1   = 0.01;
+    const float volume_1   = 0.001;
     const float volume_100 = 1;
 
     const int steps = ui->volume_s->maximum() - ui->volume_s->minimum();
 
-    const float step = root(steps, volume_100/volume_1);
+    const float step = root(steps, volume_100/volume_1, 1000);
 
     audioOutput->setVolume(volume_1 * powerIntFancy(step, slider));
 }

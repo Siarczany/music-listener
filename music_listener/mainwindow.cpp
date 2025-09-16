@@ -13,14 +13,15 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase* database)
     if(settings.value("lastUser").toString() == "")
     {
         //show_screen<login_screen>();
-        show_login();
+        //show_login();
         //show_register();
         //show_testowanie();
-        //show_playlists(true, 0);
+        show_playlists(false, 1);
         //show_songs(false, 1);
         //showSongsAdd(false, 0);
         //showPlaylistAdd(true, 0);
         //showPlaylistEdit(true, 0, 1);
+        //showPlayer(true, 0, 0);
     }
 
     //login = new login_screen(this, database);

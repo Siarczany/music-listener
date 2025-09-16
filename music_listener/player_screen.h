@@ -34,6 +34,8 @@ private:
     int playlistSize;
     int currentSongNumber = 0;
 
+    QString songLength;
+
     void playlistInfoQuery();
     void songInfoQuery();
 
