@@ -38,6 +38,10 @@ public:
 private:
     QSqlDatabase* db;
     QWidget* last_screen = nullptr;
+    bool isGuest = 0;
+    int userId = 0;
+    int songId = 0;
+    int playlistId = 0;
 
     login_screen* login;
     register_screen* registe; // "register" is something else in qt xddd

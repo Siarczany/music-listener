@@ -4,8 +4,38 @@
 #include <QWidget>
 #include <QLabel>
 #include <QMouseEvent>
+#include <QVBoxLayout>
+#include <QLineEdit>
 
-class testowanie : public QWidget
+class editScreen : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit editScreen(QWidget *parent = nullptr);
+    ~editScreen();
+
+    void addLabelLineEdit(QLabel* label,
+                          QLineEdit* lineEdit,
+                          const QString name,
+                          const QString toolTip,
+                          const int width);
+    void addWidget(QWidget* widget, const int width);
+    void addLayout(QLayout* layout, const int width);
+signals:
+    void back();
+private:
+    QVBoxLayout* layout;
+
+
+    void loadQuery();
+    void editQuery();
+
+
+    void addEditStuff();
+};
+
+class testowanie : public editScreen
 {
     Q_OBJECT
 
@@ -14,7 +44,8 @@ public:
     ~testowanie();
 
 private:
-
+    QLineEdit* le1;
+    QLineEdit* le2;
 };
 
 
