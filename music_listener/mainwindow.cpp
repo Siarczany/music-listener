@@ -15,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent, QSqlDatabase* database)
         //show_screen<login_screen>();
         //show_login();
         //show_register();
-        //show_testowanie();
-        show_playlists(false, 1);
+        show_testowanie();
+        //show_playlists(false, 1);
         //show_songs(false, 1);
         //showSongsAdd(false, 0);
         //showPlaylistAdd(true, 0);
