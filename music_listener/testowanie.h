@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QVBoxLayout>
 #include <QLineEdit>
+#include <QPushButton>
 
 class editScreen : public QWidget
 {
@@ -22,17 +23,25 @@ public:
                           const int width);
     void addWidget(QWidget* widget, const int width);
     void addLayout(QLayout* layout, const int width);
+    void addEditStuff(const int width);
+    void setUserOutputText(const QString& text);
+    void addUserOutput(const QString& text);
 signals:
     void back();
 private:
     QVBoxLayout* layout;
 
+    QPushButton* back_pb;
+    QLabel* userOutput_l;
+    QPushButton* edit_pb;
 
-    void loadQuery();
-    void editQuery();
+    int longestUserOutputWidth = 0;
+
+    virtual void loadQuery();
+    virtual void editQuery();
 
 
-    void addEditStuff();
+    void clearUserOutput();
 };
 
 class testowanie : public editScreen
@@ -46,6 +55,9 @@ public:
 private:
     QLineEdit* le1;
     QLineEdit* le2;
+
+    void editQuery() override;
+    void loadQuery() override;
 };
 
 
