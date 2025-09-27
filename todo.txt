@@ -40,6 +40,8 @@ playlist songs add screen:
  not really knowing what song are we adding without highlighting the current one that the cursor is over
  column sizes changes when the songs get added
 
+in edit screen template if width is 0 assume fullscreen or something
+
  
  
 
