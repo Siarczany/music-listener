@@ -18,7 +18,7 @@ public:
     ~songs_add_screen();
 
 signals:
-    toSongsScreen(bool isGuest, int userId = 0);
+    toSongsScreen();
 
 private:
     Ui::songs_add_screen *ui;

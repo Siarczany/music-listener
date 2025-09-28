@@ -36,12 +36,12 @@ songs_screen::~songs_screen()
 
 void songs_screen::show_playlists()
 {
-    emit to_playlists_screen(is_guest, user_id);
+    emit to_playlists_screen();
 }
 
 void songs_screen::showSongsAdd()
 {
-    emit toSongsAddScreen(is_guest, user_id);
+    emit toSongsAddScreen();
 }
 
 void songs_screen::setup_widget()
@@ -127,11 +127,13 @@ void songs_screen::setupBody()
 
         QAction* tagAction = menu->addAction("Tag");
         connect(tagAction, &QAction::triggered, this, [this, index](){
-            emit toSongsTagScreen(is_guest, user_id, index);
+            emit updateSongsId(index);
+            emit toSongsTagScreen();
         });
         QAction* editAction = menu->addAction("Edit");
         connect(editAction, &QAction::triggered, this, [this, index](){
-            emit toSongsEditScreen(is_guest, user_id, index);
+            emit updateSongsId(index);
+            emit toSongsEditScreen();
         });
         nic->setRowMenu(row, menu);
         QAction* removeAction = menu->addAction("Delete");

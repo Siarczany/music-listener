@@ -80,7 +80,8 @@ SongsEditScreen::~SongsEditScreen()
 
 void SongsEditScreen::showSongs()
 {
-    emit toSongsScreen(isGuest, userId);
+    emit updateSongId(0);
+    emit toSongsScreen();
 }
 
 void SongsEditScreen::setupUi()

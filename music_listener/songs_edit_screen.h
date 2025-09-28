@@ -18,7 +18,8 @@ public:
     ~SongsEditScreen();
 
 signals:
-    toSongsScreen(int isGuest, int userId = 0);
+    toSongsScreen();
+    updateSongId(int songId);
 
 private:
     Ui::songs_edit_screen *ui;

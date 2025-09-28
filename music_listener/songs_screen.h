@@ -18,10 +18,12 @@ public:
     ~songs_screen();
 
 signals:
-    to_playlists_screen(bool is_guest, int user_id = 0);
-    toSongsAddScreen(bool isGuest, int userId = 0);
-    toSongsEditScreen(bool isGuest, int userId = 0, int songId = 0);
-    toSongsTagScreen(bool isGuest, int userId = 0, int songId = 0);
+    to_playlists_screen();
+    toSongsAddScreen();
+    toSongsEditScreen();
+    toSongsTagScreen();
+
+    updateSongsId(int songId);
 
 private:
     Ui::songs_screen *ui;

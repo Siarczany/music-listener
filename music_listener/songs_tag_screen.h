@@ -18,10 +18,11 @@ public:
     ~SongsTagScreen();
 
 signals:
-    toSongsScreen(bool isGuest, int userId = 0);
+    toSongsScreen();
     toSongsTagAddScreen(bool isGuest, int userId = 0, int songId = 0);
     toSongsTagEditScreen(bool isGuest, int userId = 0, int songId = 0, int tagId = 0);
 
+    updateSongId(int songId);
 
 private:
     Ui::SongsTagScreen *ui;

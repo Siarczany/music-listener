@@ -18,7 +18,10 @@ public:
 
 signals:
     to_register_screen();
-    to_playlists_screen(bool is_guest, int user_id = 0);
+    to_playlists_screen();
+
+    updateIsGuest(bool isGuest);
+    updateUserId(int userId);
 
 private:
     Ui::login_screen *ui;
