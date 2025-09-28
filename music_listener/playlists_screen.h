@@ -22,10 +22,13 @@ public:
 
 signals:
     to_login_screen();
-    to_songs_screen(bool is_guest, int user_id = 0);
+    to_songs_screen();
     toPlaylistAddScreen(bool isGuest, int userId = 0);
     toPlayerScreen(bool isGuest, int userId = 0, int playlistId = 0);
     toPlaylistEditScreen(bool isGuest, int userId = 0, int playlistId = 0);
+
+    updateIsGuest(bool isGuest);
+    updateUserId(int userId);
 
 
 private:

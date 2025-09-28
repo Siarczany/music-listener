@@ -108,7 +108,7 @@ songs_add_screen::~songs_add_screen()
 
 void songs_add_screen::showSongs()
 {
-    emit toSongsScreen(isGuest, userId);
+    emit toSongsScreen();
 }
 
 QStringList songs_add_screen::artistQuery(const QString &text)

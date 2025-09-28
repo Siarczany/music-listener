@@ -33,7 +33,8 @@ SongsTagScreen::~SongsTagScreen()
 
 void SongsTagScreen::showSongs()
 {
-    emit toSongsScreen(isGuest, userId);
+    emit updateSongId(0);
+    emit toSongsScreen();
 }
 
 void SongsTagScreen::showAdd()

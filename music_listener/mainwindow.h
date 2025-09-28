@@ -35,6 +35,12 @@ public:
     MainWindow(QWidget *parent = nullptr, QSqlDatabase* database = nullptr);
     ~MainWindow();
 
+public slots:
+    void updateIsGuest(bool isGuest);
+    void updateUserId(int userId);
+    void updateSongId(int songId);
+    void updatePlaylistId(int playlistId);
+
 private:
     QSqlDatabase* db;
     QWidget* last_screen = nullptr;
@@ -63,18 +69,20 @@ private:
     void switch_screens(QWidget* current_screen);
     void show_login();
     void show_register();
-    void show_playlists(bool is_guest, int user_id);
+    void show_playlists();
     void show_testowanie();
-    void show_songs(bool is_guest, int user_id);
-    void showSongsAdd(bool isGuest, int userId);
-    void showSongsEdit(bool isGuest, int userId, int songId);
-    void showSongsTags(bool isGuest, int userId, int songId);
+    void show_songs();
+    void showSongsAdd();
+    void showSongsEdit();
+    void showSongsTags();
     void showSongsTagAdd(bool isGuest, int userId, int songId);
     void showPlaylistAdd(bool isGuest, int userId);
     void showPlaylistEdit(bool isGuest, int userId, int playlistId);
     void showPlaylistSongAdd(bool isGuest, int userId, int playlistId);
     void showPlaylistSongEdit(bool isGuest, int userId, int playlistId, int songId);
     void showPlayer(bool isGuest, int userId, int playlistId);
+
+    void printStuff();
 
     template<typename app_screen>
     void show_screen()

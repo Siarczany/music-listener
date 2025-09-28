@@ -32,7 +32,8 @@ login_screen::login_screen(QWidget *parent, QSqlDatabase* database) :
     connect(ui->create_pb, &QPushButton::clicked, this, to_register_screen);
     connect(ui->login_pb, &QPushButton::clicked, this, &login_user);
     connect(ui->guest_pb, &QPushButton::clicked, [this](){
-        emit to_playlists_screen(true);
+        emit updateIsGuest(true);
+        emit to_playlists_screen();
     });
 
     ui->login_input_layout->setAlignment(ui->login_l, Qt::AlignHCenter);
@@ -89,6 +90,7 @@ void login_screen::login_user()
         ui->user_output_l->setText("Incorrect Credentials");
         return;
     }
-    //qDebug() << query.value(0).toInt();
-    emit to_playlists_screen(false, query.value(0).toInt());
+    emit updateIsGuest(false);
+    emit updateUserId(query.value(0).toInt());
+    emit to_playlists_screen();
 }

@@ -11,6 +11,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    editscreen.cpp \
     login_screen.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
     widgets/triplecheckbox.cpp
 
 HEADERS += \
+    editscreen.h \
     login_screen.h \
     mainwindow.h \
     player_screen.h \

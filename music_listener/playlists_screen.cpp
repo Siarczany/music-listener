@@ -331,12 +331,16 @@ void playlists_screen::log_out()
 {
     QSettings settings("settings.ini", QSettings::IniFormat);
     settings.setValue("lastUser", "");
+
+    emit updateIsGuest(false);
+    emit updateUserId(0);
+
     emit to_login_screen();
 }
 
 void playlists_screen::show_songs()
 {
-    emit to_songs_screen(is_guest, user_id);
+    emit to_songs_screen();
 }
 
 void playlists_screen::showPlaylistAdd()
