@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/icons">
-        <file>icons/minus.png</file>
-        <file>icons/plus.png</file>
-    </qresource>
-</RCC>
