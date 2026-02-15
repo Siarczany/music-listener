@@ -2,6 +2,7 @@
 #define TEST1_H
 
 #include "screens/screen/screen.h"
+#include "screens/screen/form.h"
 #include <navigation/appstate.h>
 #include <memory>
 

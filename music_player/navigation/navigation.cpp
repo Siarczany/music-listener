@@ -2,13 +2,14 @@
 #include <screens/test1/test1.h>
 #include <screens/test2/test2.h>
 #include <screens/test3/test3.h>
+#include "screens/testoanie/testoanie.h"
+#include <screens/login/login.h>
 
 Screen *Navigation::createScreen(Screens lookup, std::shared_ptr<void> recreationData)
 {
     Screen* newScreen = nullptr;
     switch(lookup)
     {
-//* // not yetw
         case Screens::test1:
         {
             newScreen = new test1(&appState, this, recreationData);
@@ -24,7 +25,16 @@ Screen *Navigation::createScreen(Screens lookup, std::shared_ptr<void> recreatio
             newScreen = new test3(&appState, this, recreationData);
             break;
         }
-//*/
+        case Screens::testoanie:
+        {
+            newScreen = new testoanie(&appState, this, recreationData);
+            break;
+        }
+        case Screens::Login:
+        {
+            newScreen = new Login(&appState, this, recreationData);
+            break;
+        }
         default:
         {
             return nullptr;

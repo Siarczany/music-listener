@@ -30,9 +30,9 @@ test1::test1(AppState *appState, QWidget *parent, std::shared_ptr<void> recreati
 
     connect(ui->screen2_pb, &QPushButton::clicked, this, &test1::changeScreenToTest2);
     connect(ui->screen3_pb, &QPushButton::clicked, this, &test1::changeScreenToTest3);
-    connect(ui->back_pb, &QPushButton::clicked, this, back);
+    connect(ui->back_pb, &QPushButton::clicked, this, &Screen::back);
 
-    connect(ui->editable_le, &QLineEdit::textChanged, this, &test1::saveEditableState);
+    //connect(ui->editable_le, &QLineEdit::textChanged, this, &test1::saveEditableState);
 
     qDebug() << name() << appState << " " << recreationData.get();
 }

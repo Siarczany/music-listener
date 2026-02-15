@@ -15,9 +15,16 @@ SOURCES += \
     navigation/appstate.cpp \
     navigation/navigation.cpp \
     screens/screen/screen.cpp \
+    screens/screen/form.cpp \
     screens/test1/test1.cpp \
     screens/test2/test2.cpp \
     screens/test3/test3.cpp \
+    screens/testoanie/testoanie.cpp \
+    screens/login/login.cpp \
+    widgets/nicelineedit/nicelineedit.cpp \
+    widgets/nicelineedit/resizablelineedit.cpp \
+    widgets/nicelineedit/dragwidget.cpp \
+    widgets/nicelineedit/scrollablelabel.cpp \
 
 HEADERS += \
     navigation/filo.h \
@@ -25,11 +32,17 @@ HEADERS += \
     navigation/appstate.h \
     navigation/navigation.h \
     screens/screen/screen.h \
+    screens/screen/form.h \
     screens/screens.h \
     screens/test1/test1.h \
     screens/test2/test2.h \
     screens/test3/test3.h \
-
+    screens/testoanie/testoanie.h \
+    screens/login/login.h \
+    widgets/nicelineedit/nicelineedit.h \
+    widgets/nicelineedit/resizablelineedit.h \
+    widgets/nicelineedit/dragwidget.h \
+    widgets/nicelineedit/scrollablelabel.h \
 
 FORMS += \
     screens/test1/test1.ui \

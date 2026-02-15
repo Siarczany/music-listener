@@ -6,7 +6,8 @@ enum class Screens
       test1
     , test2
     , test3
-    , d
+    , testoanie
+    , Login
 };
 
 #endif // SCREENS_H
