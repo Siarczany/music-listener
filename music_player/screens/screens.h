@@ -8,6 +8,7 @@ enum class Screens
     , test3
     , testoanie
     , Login
+    , SongAdd
 };
 
 #endif // SCREENS_H

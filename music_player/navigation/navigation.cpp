@@ -3,7 +3,9 @@
 #include <screens/test2/test2.h>
 #include <screens/test3/test3.h>
 #include "screens/testoanie/testoanie.h"
+
 #include <screens/login/login.h>
+#include <screens/songadd/songadd.h>
 
 Screen *Navigation::createScreen(Screens lookup, std::shared_ptr<void> recreationData)
 {
@@ -33,6 +35,11 @@ Screen *Navigation::createScreen(Screens lookup, std::shared_ptr<void> recreatio
         case Screens::Login:
         {
             newScreen = new Login(&appState, this, recreationData);
+            break;
+        }
+        case Screens::SongAdd:
+        {
+            newScreen = new SongAdd(&appState, this, recreationData);
             break;
         }
         default:

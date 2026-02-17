@@ -33,9 +33,6 @@ public:
     }
 };
 
-#include "widgets/nicelineedit/resizablelineedit.h"
-#include "widgets/nicelineedit/scrollablelabel.h"
-
 Login::Login(AppState *appState, QWidget *parent, std::shared_ptr<void> recreationData)
     : Form(parent)
 {
@@ -55,20 +52,20 @@ Login::Login(AppState *appState, QWidget *parent, std::shared_ptr<void> recreati
     setupWidget2();
     setupWIdget3();
     //*/
-    addTextField("login", "Login");
-    addTextField("Passwword", "pass");
-    //ResizableLineEdit* rle = new ResizableLineEdit(this);
-    //addWidget(rle);
-    NiceLineEdit* nle = new NiceLineEdit("Some start textiiiiiiasddsaDDDDsddsaiiiiiqertyuiopasdfghjklzxcvbnmmnbvcxzlkjhgfdsapoiuytreqiiiiiMmMm this is endys", this);
-    addWidget(nle);
+    NiceLineEdit* login = addTextField("login", "Login");
+    NiceLineEdit* pass = addTextField("Passwword", "pass");
+
     QPushButton* back_pb = addBackButton();
     QPushButton* test_pb = new QPushButton(this);
     test_pb->setText("test");
     addWidget(test_pb);
 
-    connect(test_pb, &QPushButton::clicked, this, [nle]()
+
+
+    connect(test_pb, &QPushButton::clicked, this, [login, pass]()
             {
-        qDebug() << nle->text();
+        qDebug() << login->text();
+        qDebug() << pass->text();
     });
 
 

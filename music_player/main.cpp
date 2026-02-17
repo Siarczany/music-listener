@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Navigation nav(Screens::Login);
+    Navigation nav(Screens::SongAdd);
     nav.show();
     return a.exec();
 }

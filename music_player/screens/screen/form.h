@@ -25,7 +25,7 @@ public:
 
     QWidget* addWidget(QWidget *widget, int stretch = 0, Qt::Alignment alignment = Qt::AlignHCenter);
 
-    QLineEdit* addTextField(QString text, QString toolTipText = QString(), int stretch = 0, Qt::Alignment = Qt::AlignHCenter);
+    NiceLineEdit* addTextField(const QString& text, const QString& toolTip = QString());
 
     QPushButton* addBackButton();
 };

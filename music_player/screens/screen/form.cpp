@@ -30,31 +30,15 @@ QWidget* Form::addWidget(QWidget *widget, int stretch, Qt::Alignment alignment)
     return widget;
 }
 
-QLineEdit *Form::addTextField(QString text, QString toolTipText, int stretch, Qt::Alignment alignment)
+NiceLineEdit *Form::addTextField(const QString &text, const QString &toolTip)
 {
-    QLabel* label = new QLabel(this);
-    label->setAlignment(Qt::AlignHCenter);
-    label->setText(text);
-    label->setToolTip(toolTipText);
-    //label->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    NiceLineEdit* nle = new NiceLineEdit(this);
+    nle->setText(text);
+    nle->setToolTip(toolTip);
 
-    QLineEdit* lineEdit = new QLineEdit(this);
-    lineEdit->setToolTip(toolTipText);
-    lineEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    addWidget(nle);
 
-    QVBoxLayout* fieldLayout = new QVBoxLayout(this);
-    fieldLayout->setContentsMargins(0, 0, 0, 0);
-    fieldLayout->setSpacing(0);
-
-    fieldLayout->addWidget(label, 0, Qt::AlignHCenter);
-    fieldLayout->addWidget(lineEdit, 0, Qt::AlignHCenter);
-
-    QWidget* field = new QWidget(this);
-    field->setLayout(fieldLayout);
-
-    layout->addWidget(field, stretch, alignment);
-
-    return lineEdit;
+    return nle;
 }
 
 QPushButton *Form::addBackButton()
