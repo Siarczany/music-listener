@@ -2,7 +2,7 @@ QT       += core gui
 QT += sql
 QT += multimedia
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets-private
 
 CONFIG += c++17
 
@@ -26,6 +26,7 @@ SOURCES += \
     widgets/nicelineedit/dragwidget.cpp \
     widgets/nicelineedit/scrollablelabel.cpp \
     screens/songadd/songadd.cpp \
+    widgets/nicefileedit/nicefileedit.cpp \
 
 HEADERS += \
     navigation/filo.h \
@@ -45,6 +46,7 @@ HEADERS += \
     widgets/nicelineedit/dragwidget.h \
     widgets/nicelineedit/scrollablelabel.h \
     screens/songadd/songadd.h \
+    widgets/nicefileedit/nicefileedit.h \
 
 FORMS += \
     screens/test1/test1.ui \

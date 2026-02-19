@@ -2,6 +2,8 @@
 
 //#include <screens/screen/screen.h>
 #include <QScrollArea>
+#include "widgets/nicefileedit/nicefileedit.h"
+#include <QFileInfo>
 
 SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recreationData)
     : Form(parent)
@@ -17,10 +19,12 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
     //*/
 
     // widgets setups
-    NiceLineEdit* plik = addTextField("plik", "plik");
-    QPushButton* selectFile_pb = new QPushButton(this);
-    selectFile_pb->setText("Wybierz plik");
-    addWidget(selectFile_pb);
+    //NiceLineEdit* plik = addTextField("plik", "plik");
+    //QPushButton* selectFile_pb = new QPushButton(this);
+    //selectFile_pb->setText("Wybierz plik");
+    //addWidget(selectFile_pb);
+    NiceFileEdit* file_nfe = new NiceFileEdit("Plik", this);
+    addWidget(file_nfe);
     NiceLineEdit* nazwa = addTextField("Nazwa", "Nazwa");
     NiceLineEdit* author = addTextField("autor", "autor");
     QLabel* authors_l = new QLabel(this);
@@ -29,6 +33,12 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
     QScrollArea* authors_sa = new QScrollArea(this);
     addWidget(authors_sa);
     addBackButton();
+
+    connect(file_nfe, &NiceFileEdit::textChanged, this, [nazwa](const QString& text){
+        QFileInfo file(text);
+        nazwa->setText(file.baseName());
+
+    });
 
     if(recreationData != nullptr)
     {

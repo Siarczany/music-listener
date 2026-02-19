@@ -20,6 +20,8 @@ NiceLineEdit::NiceLineEdit(QWidget* parent)
             {
         label->setFixedWidth(rle->width());
     });
+
+    connect(rle, &ResizableLineEdit::textChanged, this, &NiceLineEdit::textChanged);
 }
 
 NiceLineEdit::NiceLineEdit(const QString &text, QWidget *parent)
@@ -35,9 +37,14 @@ NiceLineEdit::~NiceLineEdit()
 
 }
 
-void NiceLineEdit::setText(const QString &text)
+void NiceLineEdit::setLabel(const QString &text)
 {
     label->setFullText(text);
+}
+
+void NiceLineEdit::setText(const QString &text)
+{
+    rle->setText(text);
 }
 
 void NiceLineEdit::setToolTip(const QString &text)

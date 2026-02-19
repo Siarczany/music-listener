@@ -1,6 +1,7 @@
 #include "resizablelineedit.h"
 
 
+
 ResizableLineEdit::ResizableLineEdit(QWidget *parent)
     : QWidget(parent)
     , lineEdit(new QLineEdit(this))
@@ -29,12 +30,17 @@ ResizableLineEdit::ResizableLineEdit(QWidget *parent)
         resizeLineEdit(lineEditStartingSize.x() - 2*point.x());
     });
 
-
+    connect(lineEdit, &QLineEdit::textChanged, this, textChanged);
 }
 
 ResizableLineEdit::~ResizableLineEdit()
 {
 
+}
+
+void ResizableLineEdit::setText(const QString &text)
+{
+    lineEdit->setText(text);
 }
 
 const QString ResizableLineEdit::text()
@@ -76,6 +82,20 @@ void ResizableLineEdit::resizeEvent(QResizeEvent *event)
         overlap, lineEdit->height());
 
     emit sizeChanged();
+}
+
+void ResizableLineEdit::wheelEvent(QWheelEvent *event)
+{
+    Q_D(QLineEdit);  // dostęp do d-pointera -> QLineEditPrivate*
+
+    int delta = event->angleDelta().y();
+    int step = 20;
+
+    int newOffset = d->hscroll + (delta < 0 ? step : -step);
+    d->setScrollOffset(newOffset);  // bezpośrednie przesunięcie widoku
+
+    update();
+    event->accept();
 }
 
 

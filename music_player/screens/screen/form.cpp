@@ -33,7 +33,7 @@ QWidget* Form::addWidget(QWidget *widget, int stretch, Qt::Alignment alignment)
 NiceLineEdit *Form::addTextField(const QString &text, const QString &toolTip)
 {
     NiceLineEdit* nle = new NiceLineEdit(this);
-    nle->setText(text);
+    nle->setLabel(text);
     nle->setToolTip(toolTip);
 
     addWidget(nle);
