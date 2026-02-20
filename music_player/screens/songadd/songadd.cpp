@@ -4,6 +4,7 @@
 #include <QScrollArea>
 #include "widgets/nicefileedit/nicefileedit.h"
 #include <QFileInfo>
+#include "widgets/suggestionlinedit/suggestionlineedit.h"
 
 SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recreationData)
     : Form(parent)
@@ -25,8 +26,16 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
     //addWidget(selectFile_pb);
     NiceFileEdit* file_nfe = new NiceFileEdit("Plik", this);
     addWidget(file_nfe);
-    NiceLineEdit* nazwa = addTextField("Nazwa", "Nazwa");
-    NiceLineEdit* author = addTextField("autor", "autor");
+    NiceLineEdit* nazwa = addTextField("Nazwa93574359843579375943759735987439573yiurruyru", "Nazwa");
+    //NiceLineEdit* author = addTextField("autor", "autor");
+    SuggestionLineEdit* author = new SuggestionLineEdit(this);
+
+
+    addWidget(author);
+    author->setQuery([this](const QString& text){
+        return querytest(text);
+    });
+
     QLabel* authors_l = new QLabel(this);
     authors_l->setText("autorzy(68)");
     addWidget(authors_l);
@@ -77,4 +86,21 @@ void SongAdd::recreate()
 {
     qDebug() << "recreating " << name();
     //RecreationData* rd = recreation_data.get();
+}
+
+QStringList SongAdd::querytest(const QString& text)
+{
+    QStringList all;
+    all << "qwe" << "wer" << "ert" << "rty" << "tyu" << "yui" << " uio" << "iop" << "qe";
+
+    QStringList ret;
+
+    for(QString& str : all)
+    {
+        if(rand()%3 == 0)
+        {
+            ret << str;
+        }
+    }
+    return ret;
 }

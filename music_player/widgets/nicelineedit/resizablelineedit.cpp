@@ -86,15 +86,25 @@ void ResizableLineEdit::resizeEvent(QResizeEvent *event)
 
 void ResizableLineEdit::wheelEvent(QWheelEvent *event)
 {
-    Q_D(QLineEdit);  // dostęp do d-pointera -> QLineEditPrivate*
+    //Q_D(QLineEdit);  // dostęp do d-pointera -> QLineEditPrivate*
 
-    int delta = event->angleDelta().y();
-    int step = 20;
+    //int delta = event->angleDelta().y();
+    //int step = 20;
 
-    int newOffset = d->hscroll + (delta < 0 ? step : -step);
-    d->setScrollOffset(newOffset);  // bezpośrednie przesunięcie widoku
+    //int newOffset = d->hscroll + (delta < 0 ? step : -step);
+    //d->setScrollOffset(newOffset);  // bezpośrednie przesunięcie widoku
 
-    update();
+    //update();
+    if(event->angleDelta().y() > 0)
+    {
+        lineEdit->cursorForward(false, 1);
+    }
+    else
+    {
+        lineEdit->cursorBackward(false, 1);
+    }
+    //qDebug() << event->angleDelta().y();
+
     event->accept();
 }
 

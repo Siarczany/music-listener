@@ -27,6 +27,10 @@ SOURCES += \
     widgets/nicelineedit/scrollablelabel.cpp \
     screens/songadd/songadd.cpp \
     widgets/nicefileedit/nicefileedit.cpp \
+    widgets/nicelineedit/scrollablelineedit.cpp \ #possible delete because idk how to make it work as I wawnt it to
+    widgets/suggestionlinedit/suggestionlineedit.cpp \
+    widgets/suggestionlinedit/suggestionpopup.cpp \
+
 
 HEADERS += \
     navigation/filo.h \
@@ -47,6 +51,9 @@ HEADERS += \
     widgets/nicelineedit/scrollablelabel.h \
     screens/songadd/songadd.h \
     widgets/nicefileedit/nicefileedit.h \
+    widgets/nicelineedit/scrollablelineedit.h \ # possible delete explaination up
+    widgets/suggestionlinedit/suggestionlineedit.h \
+    widgets/suggestionlinedit/suggestionpopup.h \
 
 FORMS += \
     screens/test1/test1.ui \
