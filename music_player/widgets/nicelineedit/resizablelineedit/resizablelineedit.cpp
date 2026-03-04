@@ -3,8 +3,7 @@
 
 
 ResizableLineEdit::ResizableLineEdit(QWidget *parent)
-    : QWidget(parent)
-    , lineEdit(new QLineEdit(this))
+    : QLineEdit(parent)
     , resizerRight(new DragWidget(this))
     , resizerLeft(new DragWidget(this))
     , layout(new QHBoxLayout(this))
@@ -12,8 +11,6 @@ ResizableLineEdit::ResizableLineEdit(QWidget *parent)
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-
-    layout->addWidget(lineEdit);
 
     resizerRight->raise();
     resizerLeft->raise();
@@ -29,8 +26,6 @@ ResizableLineEdit::ResizableLineEdit(QWidget *parent)
             {
         resizeLineEdit(lineEditStartingSize.x() - 2*point.x());
     });
-
-    connect(lineEdit, &QLineEdit::textChanged, this, textChanged);
 }
 
 ResizableLineEdit::~ResizableLineEdit()
@@ -38,19 +33,9 @@ ResizableLineEdit::~ResizableLineEdit()
 
 }
 
-void ResizableLineEdit::setText(const QString &text)
-{
-    lineEdit->setText(text);
-}
-
-const QString ResizableLineEdit::text()
-{
-    return lineEdit->text();
-}
-
 void ResizableLineEdit::updateLineEditStartingSize()
 {
-    lineEditStartingSize = QPoint(lineEdit->size().width(), lineEdit->size().height());
+    lineEditStartingSize = QPoint(size().width(), size().height());
 }
 
 void ResizableLineEdit::resizeLineEdit(int width)
@@ -64,7 +49,7 @@ void ResizableLineEdit::resizeLineEdit(int width)
     {
         width = 2*resizerOverlap + minSpaceToClick;
     }
-    lineEdit->setFixedWidth(width);
+    setFixedWidth(width);
 }
 
 void ResizableLineEdit::resizeEvent(QResizeEvent *event)
@@ -74,12 +59,12 @@ void ResizableLineEdit::resizeEvent(QResizeEvent *event)
     int overlap = 5;
 
     resizerRight->setGeometry(
-        lineEdit->width() - overlap, 0,
-        overlap, lineEdit->height());
+        width() - overlap, 0,
+        overlap, height());
 
     resizerLeft->setGeometry(
         0, 0,
-        overlap, lineEdit->height());
+        overlap, height());
 
     emit sizeChanged();
 }
@@ -97,11 +82,11 @@ void ResizableLineEdit::wheelEvent(QWheelEvent *event)
     //update();
     if(event->angleDelta().y() > 0)
     {
-        lineEdit->cursorForward(false, 1);
+        cursorForward(false, 1);
     }
     else
     {
-        lineEdit->cursorBackward(false, 1);
+        cursorBackward(false, 1);
     }
     //qDebug() << event->angleDelta().y();
 

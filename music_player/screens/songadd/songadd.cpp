@@ -4,7 +4,7 @@
 #include <QScrollArea>
 #include "widgets/nicefileedit/nicefileedit.h"
 #include <QFileInfo>
-#include "widgets/suggestionlinedit/suggestionlineedit.h"
+#include "authors.h"
 
 SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recreationData)
     : Form(parent)
@@ -20,33 +20,45 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
     //*/
 
     // widgets setups
-    //NiceLineEdit* plik = addTextField("plik", "plik");
-    //QPushButton* selectFile_pb = new QPushButton(this);
-    //selectFile_pb->setText("Wybierz plik");
-    //addWidget(selectFile_pb);
     NiceFileEdit* file_nfe = new NiceFileEdit("Plik", this);
     addWidget(file_nfe);
-    NiceLineEdit* nazwa = addTextField("Nazwa93574359843579375943759735987439573yiurruyru", "Nazwa");
-    //NiceLineEdit* author = addTextField("autor", "autor");
-    SuggestionLineEdit* author = new SuggestionLineEdit(this);
+    NiceLineEdit* nazwa = addTextField("Nazwa", "Nazwa");
 
-
+    NiceLineEdit* author = new NiceLineEdit("Autor", this, NiceLineEdit::LineEdit::Suggestion);
     addWidget(author);
-    author->setQuery([this](const QString& text){
-        return querytest(text);
+
+    SuggestionLineEdit* suggestionAuthor = static_cast<SuggestionLineEdit*>(author->getLineEdit());
+    suggestionAuthor->setQuery([this](const QString& text){
+        QStringList all;
+        all << "qwe" << "wer" << "ert" << "rty" << "tyu" << "yui" << " uio" << "iop" << "qe";
+
+        QStringList ret;
+
+        for(QString& str : all)
+        {
+            if(rand()%3 == 0)
+            {
+                ret << str;
+            }
+        }
+        return ret;
     });
 
-    QLabel* authors_l = new QLabel(this);
-    authors_l->setText("autorzy(68)");
-    addWidget(authors_l);
-    QScrollArea* authors_sa = new QScrollArea(this);
-    addWidget(authors_sa);
+    AuthorsList* al = new AuthorsList(this);
+    HideableWidget* he = new HideableWidget(al, this);
+    he->setText("Autorzy(68)");
+    addWidget(he);
     addBackButton();
 
     connect(file_nfe, &NiceFileEdit::textChanged, this, [nazwa](const QString& text){
         QFileInfo file(text);
         nazwa->setText(file.baseName());
 
+    });
+
+    connect(suggestionAuthor, &SuggestionLineEdit::choosen,
+            this, [author](){
+        qDebug() << author->text();
     });
 
     if(recreationData != nullptr)
@@ -86,21 +98,4 @@ void SongAdd::recreate()
 {
     qDebug() << "recreating " << name();
     //RecreationData* rd = recreation_data.get();
-}
-
-QStringList SongAdd::querytest(const QString& text)
-{
-    QStringList all;
-    all << "qwe" << "wer" << "ert" << "rty" << "tyu" << "yui" << " uio" << "iop" << "qe";
-
-    QStringList ret;
-
-    for(QString& str : all)
-    {
-        if(rand()%3 == 0)
-        {
-            ret << str;
-        }
-    }
-    return ret;
 }

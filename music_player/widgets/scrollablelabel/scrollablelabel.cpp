@@ -247,37 +247,34 @@ void ScrollableLabel::wheelEvent(QWheelEvent *event)
         if (event->angleDelta().y() > 0) {
             // Przewijanie w górę
             //qDebug() << "Scroll w górę";
-            if(offset == offsetMin)
-            {
-                offsetAtMin = false;
-            }
-            if(offset >= offsetMax)
-            {
-                offsetAtMax = true;
-                //qDebug() << "at the end";
-            }
             offset += pixelsScrolled;
         }
         else
         {
             // Przewijanie w dół
             //qDebug() << "Scroll w dół";
-
             offset -= pixelsScrolled;
-            if(offset <= offsetMin)
-            {
-                offsetAtMin = true;
-            }
-            if(offsetAtMax == offsetMax)
-            {
-                offsetAtMax = false;
-            }
         }
+
+        if(offset <= offsetMin)
+        {
+            offsetAtMin = true;
+            offsetAtMax = false;
+        }
+        if(offset >= offsetMax)
+        {
+            offsetAtMax = true;
+            offsetAtMin = false;
+        }
+
         clamp(offset, offsetMin, offsetMax);
 
         //qDebug() << offset << width();
         setText(elideBothSides(fullText, offset, width()));
     }
+
+    //qDebug() << "offsetAtMin:" << offsetAtMin;
+    //qDebug() << "offsetAtMax:" << offsetAtMax;
 
 
 

@@ -4,8 +4,9 @@
 #include <QLineEdit>
 #include <functional>
 #include "suggestionpopup.h"
+#include <widgets/nicelineedit/resizablelineedit/resizablelineedit.h>
 
-class SuggestionLineEdit : public QLineEdit
+class SuggestionLineEdit : public ResizableLineEdit
 {
     Q_OBJECT
 public:
@@ -16,8 +17,10 @@ public:
 protected:
     void focusOutEvent(QFocusEvent* event) override;
 
+signals:
+    void choosen();
+
 private:
-    //QListWidget* popup;
     SuggestionPopup* popup;
 
     void setupPopup(const QString& text);

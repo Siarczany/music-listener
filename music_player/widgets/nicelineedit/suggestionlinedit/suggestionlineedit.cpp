@@ -4,8 +4,7 @@
 #include <QApplication>
 
 SuggestionLineEdit::SuggestionLineEdit(QWidget *parent) :
-    QLineEdit(parent)
-    //, popup(new QListWidget(this))
+    ResizableLineEdit(parent)
     , popup(new SuggestionPopup(this))
 {
     popup->hide();
@@ -14,6 +13,7 @@ SuggestionLineEdit::SuggestionLineEdit(QWidget *parent) :
 
     connect(popup, &SuggestionPopup::itemChosen, this, [this](const QString& text){
         this->setText(text);
+        emit choosen();
     });
 
 }

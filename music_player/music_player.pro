@@ -16,20 +16,24 @@ SOURCES += \
     navigation/navigation.cpp \
     screens/screen/screen.cpp \
     screens/screen/form.cpp \
+    screens/songadd/authors.cpp \
     screens/test1/test1.cpp \
     screens/test2/test2.cpp \
     screens/test3/test3.cpp \
     screens/testoanie/testoanie.cpp \
     screens/login/login.cpp \
+    widgets/hideablewidget/clickablelabel.cpp \
+    widgets/hideablewidget/hiddenwidget.cpp \
+    widgets/hideablewidget/hideablewidget.cpp \
     widgets/nicelineedit/nicelineedit.cpp \
-    widgets/nicelineedit/resizablelineedit.cpp \
-    widgets/nicelineedit/dragwidget.cpp \
-    widgets/nicelineedit/scrollablelabel.cpp \
     screens/songadd/songadd.cpp \
     widgets/nicefileedit/nicefileedit.cpp \
-    widgets/nicelineedit/scrollablelineedit.cpp \ #possible delete because idk how to make it work as I wawnt it to
-    widgets/suggestionlinedit/suggestionlineedit.cpp \
-    widgets/suggestionlinedit/suggestionpopup.cpp \
+    widgets/nicelineedit/resizablelineedit/dragwidget.cpp \
+    widgets/nicelineedit/resizablelineedit/resizablelineedit.cpp \
+    widgets/nicelineedit/suggestionlinedit/suggestionlineedit.cpp \
+    widgets/nicelineedit/suggestionlinedit/suggestionpopup.cpp \
+    widgets/scrollablelabel/scrollablelabel.cpp \
+    widgets/listinput/listinput.cpp \
 
 
 HEADERS += \
@@ -40,20 +44,24 @@ HEADERS += \
     screens/screen/screen.h \
     screens/screen/form.h \
     screens/screens.h \
+    screens/songadd/authors.h \
     screens/test1/test1.h \
     screens/test2/test2.h \
     screens/test3/test3.h \
     screens/testoanie/testoanie.h \
     screens/login/login.h \
+    widgets/hideablewidget/clickablelabel.h \
+    widgets/hideablewidget/hiddenwidget.h \
+    widgets/hideablewidget/hideablewidget.h \
     widgets/nicelineedit/nicelineedit.h \
-    widgets/nicelineedit/resizablelineedit.h \
-    widgets/nicelineedit/dragwidget.h \
-    widgets/nicelineedit/scrollablelabel.h \
     screens/songadd/songadd.h \
     widgets/nicefileedit/nicefileedit.h \
-    widgets/nicelineedit/scrollablelineedit.h \ # possible delete explaination up
-    widgets/suggestionlinedit/suggestionlineedit.h \
-    widgets/suggestionlinedit/suggestionpopup.h \
+    widgets/nicelineedit/resizablelineedit/dragwidget.h \
+    widgets/nicelineedit/resizablelineedit/resizablelineedit.h \
+    widgets/nicelineedit/suggestionlinedit/suggestionlineedit.h \
+    widgets/nicelineedit/suggestionlinedit/suggestionpopup.h \
+    widgets/scrollablelabel/scrollablelabel.h \
+    widgets/listinput/listinput.h \
 
 FORMS += \
     screens/test1/test1.ui \

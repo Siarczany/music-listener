@@ -2,7 +2,8 @@
 #include <QFileDialog>
 
 NiceFileEdit::NiceFileEdit(QWidget *parent)
-    : file_nle(new NiceLineEdit(this))
+    : QWidget(parent)
+    , file_nle(new NiceLineEdit(this))
     , select_pb(new QPushButton(this))
     , layout(new QVBoxLayout(this))
 {

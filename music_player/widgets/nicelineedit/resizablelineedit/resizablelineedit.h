@@ -8,7 +8,7 @@
 #include "dragwidget.h"
 #include <private/qlineedit_p.h>
 
-class ResizableLineEdit : public QWidget
+class ResizableLineEdit : public QLineEdit
 {
     Q_OBJECT
 
@@ -16,16 +16,10 @@ public:
     ResizableLineEdit(QWidget* parent = nullptr);
     ~ResizableLineEdit();
 
-    void setText(const QString& text);
-    const QString text();
-
 signals:
     void sizeChanged();
-    void textChanged(const QString& text);
-
 
 private:
-    QLineEdit* lineEdit;
     DragWidget* resizerRight;
     DragWidget* resizerLeft;
     QHBoxLayout* layout;

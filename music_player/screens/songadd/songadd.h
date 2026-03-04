@@ -37,8 +37,6 @@ private:
         int editableValue;
     };
     std::shared_ptr<RecreationData> recreation_data;
-
-    QStringList querytest(const QString& text);
 };
 
 #endif // SONGADD_H
