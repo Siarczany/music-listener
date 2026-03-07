@@ -10,14 +10,17 @@ class HideableWidget : public QWidget
 {
     Q_OBJECT
 public:
-    HideableWidget(HiddenWidget* widget, QWidget* parent = nullptr);
+    HideableWidget(QWidget* widget, HiddenWidget* hidden, QWidget* parent = nullptr);
     ~HideableWidget();
 
     void setText(const QString& text);
-    QWidget* getWidget() const;
+    HiddenWidget* getWidget() const;
+signals:
+    void outOfSight(const bool visibility);
 private:
     ClickableLabel* label;
-    HiddenWidget* widget;
+    HiddenWidget* hidden;
+    QWidget* widget;
     QVBoxLayout* layout;
 
     bool visible = true;

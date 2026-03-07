@@ -34,6 +34,10 @@ SOURCES += \
     widgets/nicelineedit/suggestionlinedit/suggestionpopup.cpp \
     widgets/scrollablelabel/scrollablelabel.cpp \
     widgets/listinput/listinput.cpp \
+    widgets/viewbase/item.cpp \
+    widgets/viewbase/model.cpp \
+    widgets/viewbase/mylistwidget.cpp \
+    widgets/viewbase/viewbase.cpp
 
 
 HEADERS += \
@@ -62,6 +66,10 @@ HEADERS += \
     widgets/nicelineedit/suggestionlinedit/suggestionpopup.h \
     widgets/scrollablelabel/scrollablelabel.h \
     widgets/listinput/listinput.h \
+    widgets/viewbase/item.h \
+    widgets/viewbase/model.h \
+    widgets/viewbase/mylistwidget.h \
+    widgets/viewbase/viewbase.h
 
 FORMS += \
     screens/test1/test1.ui \

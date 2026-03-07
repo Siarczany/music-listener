@@ -4,21 +4,68 @@
 #include "widgets/hideablewidget/hiddenwidget.h"
 #include <QScrollArea>
 #include "widgets/hideablewidget/hideablewidget.h"
+#include "widgets/viewbase/viewbase.h"
+#include <QPushButton>
 
-//namespace SongAdd
-//{
+class Author : public ModelData
+{
+public:
+    QString name;
+};
 
-class AuthorsList : public HiddenWidget
+class AuthorItem : public ItemWidgetBase
+{
+    Q_OBJECT
+public:
+    AuthorItem(QWidget* parent = nullptr, ModelData* data = nullptr);
+    ~AuthorItem() override;
+
+    void setFullyVisible(bool visible) override;
+
+    void update(ModelData* data) override;
+
+    void connectToList(ViewBase* list, int index) override;
+
+    ItemWidgetBase* nowy(QWidget *parent, ModelData *data) override;
+signals:
+    void deleted();
+private:
+    QHBoxLayout* layout;
+    QLabel* text;
+    QPushButton* del;
+};
+
+class  AuthorsView : public ViewBase
+{
+    Q_OBJECT
+public:
+    using ViewBase::ViewBase;
+signals:
+    void deleted(int index);
+};
+
+class AuthorsList : public QWidget
 {
     Q_OBJECT
 public:
     AuthorsList(QWidget* parent = nullptr);
     ~AuthorsList();
+
+    HiddenWidget* getHiddenWidget() const;
+    int count() const;
+    void addFirst(const QString& text);
+    void add(const QString& text);
+signals:
+
 private:
     QVBoxLayout* layout;
-    QScrollArea* area;
-};
+    HiddenWidget* hiddenWidget;
+    Model* model;
+    //QVBoxLayout* layout;
+    AuthorsView* view;
 
-//} // namespace SongAdd
+
+    bool firstLockedIn = false;
+};
 
 #endif // SONGADD_AUTHORSLIST

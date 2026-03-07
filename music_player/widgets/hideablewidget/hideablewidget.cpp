@@ -1,8 +1,9 @@
 # include "hideablewidget.h"
 
-HideableWidget::HideableWidget(HiddenWidget* widget, QWidget *parent)
+HideableWidget::HideableWidget(QWidget *widget, HiddenWidget *hidden, QWidget *parent)
     : QWidget(parent)
     , label(new ClickableLabel(this))
+    , hidden(hidden)
     , widget(widget)
     , layout(new QVBoxLayout(this))
 {
@@ -13,11 +14,13 @@ HideableWidget::HideableWidget(HiddenWidget* widget, QWidget *parent)
 
     connect(label, &ClickableLabel::pressed,
             this, [this](){
-        visible = !visible;
-        this->widget->setVisible(visible);
-    });
+                visible = !visible;
+                //this->widget->setVisible(visible);
+                //emit outOfSight(visible);
+                emit this->hidden->outOfSight(visible);
+            });
 
-    connect(widget, &HiddenWidget::setLabel,
+    connect(hidden, &HiddenWidget::setLabel,
             label, &ClickableLabel::setText);
 }
 
@@ -31,7 +34,7 @@ void HideableWidget::setText(const QString &text)
     label->setFullText(text);
 }
 
-QWidget *HideableWidget::getWidget() const
+HiddenWidget *HideableWidget::getWidget() const
 {
-    return widget;
+    return hidden;
 }

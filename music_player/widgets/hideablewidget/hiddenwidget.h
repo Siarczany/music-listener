@@ -3,13 +3,14 @@
 
 #include <QWidget>
 
-class HiddenWidget : public QWidget
+class HiddenWidget : public QObject
 {
     Q_OBJECT
 public:
-    HiddenWidget(QWidget* parent = nullptr);
+    HiddenWidget(QObject* parent = nullptr);
 signals:
     void setLabel(const QString text);
+    void outOfSight(const bool visibility);
 };
 
 #endif // HIDDENWIDGET

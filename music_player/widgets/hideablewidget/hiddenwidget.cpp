@@ -1,7 +1,7 @@
 #include "hiddenwidget.h"
 
-HiddenWidget::HiddenWidget(QWidget *parent)
-    : QWidget(parent)
+HiddenWidget::HiddenWidget(QObject *parent)
+    : QObject(parent)
 {
 
 }
