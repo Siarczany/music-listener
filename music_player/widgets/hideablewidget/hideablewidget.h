@@ -15,10 +15,14 @@ public:
 
     void setText(const QString& text);
     HiddenWidget* getWidget() const;
+    void setInSight(const bool visibility);
 signals:
-    void outOfSight(const bool visibility);
+    //void inSight(const bool visibility);
 private:
     ClickableLabel* label;
+    //int hiddenWidth = 100;
+    int visibleWidth = 250;
+
     HiddenWidget* hidden;
     QWidget* widget;
     QVBoxLayout* layout;

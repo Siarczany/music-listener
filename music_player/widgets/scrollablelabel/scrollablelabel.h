@@ -18,6 +18,7 @@ private:
     int offsetMax;
     int offsetMin;
     bool canBeELided;
+    bool doesntFit;
     int offsetDoublyElidedMin;
     int offsetDoublyElidedMax;
     bool offsetAtMin = true;

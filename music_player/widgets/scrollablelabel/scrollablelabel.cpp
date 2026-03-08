@@ -27,7 +27,15 @@ void ScrollableLabel::updateElidedText()
     }
     else
     {
-        setText(fullText);
+        if(doesntFit)
+        {
+            setText("...");
+        }
+        else
+        {
+            setText(fullText);
+        }
+
     }
 }
 
@@ -52,13 +60,23 @@ void ScrollableLabel::calculateOffsetDoublyElidedBounds(const int availableSpace
     if(availableSpace >= fm.horizontalAdvance(text))
     {
         canBeELided = false;
+        doesntFit = false;
         offsetAtMin = true;
         offsetAtMax = false;
         return;
     }
-    canBeELided = true;
 
     const int dotsWidth = fm.horizontalAdvance("...");
+    if(2*dotsWidth > availableSpace)
+    {
+        canBeELided = false;
+        doesntFit = true;
+        offsetAtMin = true;
+        offsetAtMax = false;
+        return;
+    }
+
+    canBeELided = true;
 
     //
     // left side offset

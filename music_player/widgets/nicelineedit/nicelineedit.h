@@ -2,9 +2,10 @@
 #define NICELINEEDIT_H
 
 //#include "resizablelineedit.h"
-#include "resizablelineedit/resizablelineedit.h"
+#include "mylineedit/mylineedit.h"
 #include "widgets/scrollablelabel/scrollablelabel.h"
 #include "suggestionlinedit/suggestionlineedit.h"
+#include <QVBoxLayout>
 
 class NiceLineEdit : public QWidget
 {

@@ -3,8 +3,7 @@
 AuthorsList::AuthorsList(QWidget *parent)
     : QWidget(parent)
     , layout(new QVBoxLayout(this))
-    , hiddenWidget(new HiddenWidget(this))
-
+    , hiddenWidget(new HiddenWidget(this, this))
     , model(new Model())
     , view(new AuthorsView(new AuthorItem()))
 {
@@ -12,10 +11,28 @@ AuthorsList::AuthorsList(QWidget *parent)
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(view);
 
-    connect(hiddenWidget, &HiddenWidget::outOfSight,
+    refresh();
+
+    connect(hiddenWidget, &HiddenWidget::inSight,
             this, [this](bool visibility){
         setVisible(visibility);
     });
+
+    connect(view, &AuthorsView::deleted,
+            this, [this](int index){
+        model->remove(index);
+        //view->refresh(model->getAll());
+        refresh();
+    });
+
+    connect(view, &AuthorsView::sizeChanged,
+            this, [this](){
+        setFixedWidth(view->width());
+        emit sizeChanged();
+    });
+
+
+    emit hiddenWidget->inSight(false);
 }
 
 AuthorsList::~AuthorsList()
@@ -38,19 +55,21 @@ void AuthorsList::addFirst(const QString &text)
 {
     if(model->count() > 1)
         return;
-    if(model->count() == 0)
+    if(model->count() == 0 && firstLockedIn == false)
     {
         Author* author = new Author();
         author->name = text;
         model->add(author);
-        view->refresh(model->getAll());
+        //view->refresh(model->getAll());
+        refresh();
     }
     if(model->count() == 1 && firstLockedIn == false)
     {
         Author* author = new Author();
         author->name = text;
         model->update(0, author);
-        view->refresh(model->getAll());
+        //view->refresh(model->getAll());
+        refresh();
     }
 }
 
@@ -68,7 +87,35 @@ void AuthorsList::add(const QString &text)
     Author* author = new Author();
     author->name = text;
     model->add(author);
-    view->refresh(model->getAll());
+    //view->refresh(model->getAll());
+    refresh();
+}
+
+void AuthorsList::resizeEvent(QResizeEvent *event)
+{
+    qDebug() << "resize!";
+    emit hiddenWidget->sizeChanged();
+}
+
+void AuthorsList::refresh()
+{
+    view->refresh(model->getAll());;
+    QString text = "Autorzy";
+    QString bracket1 = "(";
+    QString bracket2 = ")";
+
+    if(model->count() != 0)
+    {
+        text  = text
+               + bracket1
+               + QString::fromStdString(std::to_string(model->count()))
+               + bracket2;
+    }
+
+    emit hiddenWidget->setLabel(text);
+
+
+    //hiddenWidget->setLabel("Autorzy(" +);
 }
 
 AuthorItem::AuthorItem(QWidget *parent, ModelData *data)
@@ -123,4 +170,20 @@ ItemWidgetBase *AuthorItem::nowy(QWidget *parent, ModelData *data)
 {
     AuthorItem* item = new AuthorItem(parent, data);
     return item;
+}
+
+AuthorsView::AuthorsView(ItemWidgetBase *factory, QWidget *parent)
+    : ViewBase(factory, parent)
+{
+    resizableWidget = new ResizableWidget(this, this);
+    connect(resizableWidget, &ResizableWidget::sizeChanged,
+            this, [this](){
+        emit sizeChanged();
+    });
+}
+
+void AuthorsView::resizeEvent(QResizeEvent *event)
+{
+    ViewBase::resizeEvent(event);
+    resizableWidget->resize();
 }

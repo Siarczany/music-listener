@@ -4,7 +4,7 @@
 #include <QLineEdit>
 #include <functional>
 #include "suggestionpopup.h"
-#include <widgets/nicelineedit/resizablelineedit/resizablelineedit.h>
+#include "widgets/nicelineedit/mylineedit/mylineedit.h"
 
 class SuggestionLineEdit : public ResizableLineEdit
 {

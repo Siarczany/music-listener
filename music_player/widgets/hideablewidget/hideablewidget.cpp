@@ -14,14 +14,19 @@ HideableWidget::HideableWidget(QWidget *widget, HiddenWidget *hidden, QWidget *p
 
     connect(label, &ClickableLabel::pressed,
             this, [this](){
-                visible = !visible;
-                //this->widget->setVisible(visible);
-                //emit outOfSight(visible);
-                emit this->hidden->outOfSight(visible);
+                //visible = !visible;
+                //emit this->hidden->inSight(visible);
+                setInSight(!visible);
             });
 
     connect(hidden, &HiddenWidget::setLabel,
-            label, &ClickableLabel::setText);
+            this, &HideableWidget::setText);
+
+    connect(hidden, &HiddenWidget::sizeChanged,
+            this, [this](){
+        label->setFixedWidth(this->hidden->width());
+    });
+
 }
 
 HideableWidget::~HideableWidget()
@@ -32,9 +37,29 @@ HideableWidget::~HideableWidget()
 void HideableWidget::setText(const QString &text)
 {
     label->setFullText(text);
+    qDebug() << "label" << label->width();
 }
 
 HiddenWidget *HideableWidget::getWidget() const
 {
     return hidden;
+}
+
+void HideableWidget::setInSight(const bool visibility)
+{
+    visible = visibility;
+
+    if(visible == true)
+    {
+        hidden->setFixedWidth(visibleWidth);
+        label->setFixedWidth(visibleWidth);
+    }
+    else // visible == false
+    {
+        visibleWidth = hidden->width();
+        hidden->setFixedWidth(0);
+        label->setFixedWidth(100);
+    }
+
+    emit this->hidden->inSight(visible);
 }

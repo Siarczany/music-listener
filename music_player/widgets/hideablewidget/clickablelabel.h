@@ -7,7 +7,8 @@ class ClickableLabel : public ScrollableLabel
 {
     Q_OBJECT
 public:
-    using ScrollableLabel::ScrollableLabel;
+    //using ScrollableLabel::ScrollableLabel;
+    ClickableLabel(QWidget* parent = nullptr);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;

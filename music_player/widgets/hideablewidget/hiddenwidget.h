@@ -7,10 +7,15 @@ class HiddenWidget : public QObject
 {
     Q_OBJECT
 public:
-    HiddenWidget(QObject* parent = nullptr);
+    HiddenWidget(QWidget* target, QObject* parent = nullptr);
+    int width();
+    void setFixedWidth(const int width);
 signals:
     void setLabel(const QString text);
-    void outOfSight(const bool visibility);
+    void inSight(const bool visibility);
+    void sizeChanged();
+private:
+    QWidget* target;
 };
 
 #endif // HIDDENWIDGET

@@ -28,10 +28,11 @@ SOURCES += \
     widgets/nicelineedit/nicelineedit.cpp \
     screens/songadd/songadd.cpp \
     widgets/nicefileedit/nicefileedit.cpp \
-    widgets/nicelineedit/resizablelineedit/dragwidget.cpp \
-    widgets/nicelineedit/resizablelineedit/resizablelineedit.cpp \
+    widgets/nicelineedit/mylineedit/mylineedit.cpp \
     widgets/nicelineedit/suggestionlinedit/suggestionlineedit.cpp \
     widgets/nicelineedit/suggestionlinedit/suggestionpopup.cpp \
+    widgets/resizablewidget/dragwidget.cpp \
+    widgets/resizablewidget/resizeablewidget.cpp \
     widgets/scrollablelabel/scrollablelabel.cpp \
     widgets/listinput/listinput.cpp \
     widgets/viewbase/item.cpp \
@@ -60,10 +61,11 @@ HEADERS += \
     widgets/nicelineedit/nicelineedit.h \
     screens/songadd/songadd.h \
     widgets/nicefileedit/nicefileedit.h \
-    widgets/nicelineedit/resizablelineedit/dragwidget.h \
-    widgets/nicelineedit/resizablelineedit/resizablelineedit.h \
+    widgets/nicelineedit/mylineedit/mylineedit.h \
     widgets/nicelineedit/suggestionlinedit/suggestionlineedit.h \
     widgets/nicelineedit/suggestionlinedit/suggestionpopup.h \
+    widgets/resizablewidget/dragwidget.h \
+    widgets/resizablewidget/resizeablewidget.h \
     widgets/scrollablelabel/scrollablelabel.h \
     widgets/listinput/listinput.h \
     widgets/viewbase/item.h \

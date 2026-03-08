@@ -6,6 +6,7 @@
 #include "widgets/hideablewidget/hideablewidget.h"
 #include "widgets/viewbase/viewbase.h"
 #include <QPushButton>
+#include "widgets/resizablewidget/resizeablewidget.h"
 
 class Author : public ModelData
 {
@@ -39,9 +40,15 @@ class  AuthorsView : public ViewBase
 {
     Q_OBJECT
 public:
-    using ViewBase::ViewBase;
+    //using ViewBase::ViewBase;
+    AuthorsView(ItemWidgetBase* factory, QWidget* parent = nullptr);
 signals:
     void deleted(int index);
+    void sizeChanged();
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+private:
+    ResizableWidget* resizableWidget;
 };
 
 class AuthorsList : public QWidget
@@ -56,7 +63,9 @@ public:
     void addFirst(const QString& text);
     void add(const QString& text);
 signals:
-
+    void sizeChanged();
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 private:
     QVBoxLayout* layout;
     HiddenWidget* hiddenWidget;
@@ -66,6 +75,11 @@ private:
 
 
     bool firstLockedIn = false;
+    void refresh();
 };
 
 #endif // SONGADD_AUTHORSLIST
+
+
+
+

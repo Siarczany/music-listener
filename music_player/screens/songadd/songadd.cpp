@@ -46,7 +46,8 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
 
     AuthorsList* al = new AuthorsList(this);
     HideableWidget* he = new HideableWidget(al, al->getHiddenWidget(), this);
-    he->setText("Autorzy(68)");
+    he->setText("Wutorzy");
+    //he->setInSight(false);
     addWidget(he);
     addBackButton();
 
@@ -57,10 +58,13 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
     connect(suggestionAuthor, &SuggestionLineEdit::choosen,
             this, [suggestionAuthor, al](){
         al->add(suggestionAuthor->text());
+        suggestionAuthor->clear();
     });
     connect(suggestionAuthor, &SuggestionLineEdit::returnPressed,
-            this, [](){
+            this, [suggestionAuthor, al](){
         qDebug() << "enter";
+        al->add(suggestionAuthor->text());
+        suggestionAuthor->clear();
     });
 
     connect(file_nfe, &NiceFileEdit::textChanged, this, [nazwa](const QString& text){
