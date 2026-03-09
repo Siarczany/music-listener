@@ -19,10 +19,25 @@ private:
     int offsetMin;
     bool canBeELided;
     bool doesntFit;
+    enum class Fitness
+    {
+        All
+        , Partly
+        , Dots
+        , None
+    };
+    Fitness fitness;
     int offsetDoublyElidedMin;
     int offsetDoublyElidedMax;
     bool offsetAtMin = true;
     bool offsetAtMax = false;
+    enum class OffsetAt
+    {
+        Start
+        , Middle
+        , End
+    };
+    OffsetAt offsetAt;
     void clamp(int& value, const int& min, const int& max);
     void calculateOffsetDoublyElidedBounds(const int availableSpace, const QString& text);
     void calculateOffsetBounds(const QString& text);

@@ -5,6 +5,7 @@
 #include "widgets/nicefileedit/nicefileedit.h"
 #include <QFileInfo>
 #include "authors.h"
+#include "widgets/listinput/listinput.h"
 
 SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recreationData)
     : Form(parent)
@@ -46,9 +47,13 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
 
     AuthorsList* al = new AuthorsList(this);
     HideableWidget* he = new HideableWidget(al, al->getHiddenWidget(), this);
-    he->setText("Wutorzy");
-    //he->setInSight(false);
+    he->setText("Autorzy");
+    he->setInSight(false);
     addWidget(he);
+
+    ListInput* li = new ListInput(this);
+    addWidget(li);
+
     addBackButton();
 
     connect(suggestionAuthor, &SuggestionLineEdit::textChanged,

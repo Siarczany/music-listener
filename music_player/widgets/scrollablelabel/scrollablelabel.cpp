@@ -21,21 +21,32 @@ void ScrollableLabel::setFullText(const QString &text)
 
 void ScrollableLabel::updateElidedText()
 {
-    if(canBeELided)
+    switch(fitness)
+    {
+    case Fitness::All:
+    {
+        setText(fullText);
+        break;
+    }
+    case Fitness::Dots:
+    {
+        setText("...");
+        break;
+    }
+    case Fitness::None:
+    {
+        setText("");
+        break;
+    }
+    case Fitness::Partly:
     {
         setText(elideBothSides(fullText, offset, width()));
+        break;
     }
-    else
+    default:
     {
-        if(doesntFit)
-        {
-            setText("...");
-        }
-        else
-        {
-            setText(fullText);
-        }
-
+        setText("tung tung tung hasur");
+    }
     }
 }
 
@@ -53,30 +64,29 @@ void ScrollableLabel::clamp(int &value, const int &min, const int &max)
 
 void ScrollableLabel::calculateOffsetDoublyElidedBounds(const int availableSpace, const QString& text)
 {
-    //int availableSpace = width();
-
     QFontMetrics fm(font());
 
     if(availableSpace >= fm.horizontalAdvance(text))
     {
-        canBeELided = false;
-        doesntFit = false;
-        offsetAtMin = true;
-        offsetAtMax = false;
+        fitness = Fitness::All;
+        offsetAt = OffsetAt::Start;
         return;
     }
 
     const int dotsWidth = fm.horizontalAdvance("...");
     if(2*dotsWidth > availableSpace)
     {
-        canBeELided = false;
-        doesntFit = true;
-        offsetAtMin = true;
-        offsetAtMax = false;
+        fitness = Fitness::Dots;
+        return;
+    }
+    if(availableSpace < dotsWidth)
+    {
+        fitness = Fitness::None;
         return;
     }
 
     canBeELided = true;
+    fitness = Fitness::Partly;
 
     //
     // left side offset
@@ -149,7 +159,7 @@ void ScrollableLabel::calculateOffsetDoublyElidedBounds(const int availableSpace
 
 void ScrollableLabel::calculateOffsetBounds(const QString& text)
 {
-    if(canBeELided == true)
+    if(fitness == Fitness::Partly)
     {
         QFontMetrics fm(font());
 
@@ -172,21 +182,14 @@ void ScrollableLabel::calculateOffsetBounds(const QString& text)
     }
     clamp(offset, offsetMin, offsetMax);
 
-    if(offsetAtMin)
+    if(offsetAt == OffsetAt::Start)
     {
         offset = offsetMin;
     }
-    if(offsetAtMax)
+    if(offsetAt == OffsetAt::End)
     {
         offset = offsetMax;
     }
-
-    //offset = offsetMin;
-    //qDebug() << "doublymin:" << offsetDoublyElidedMin;
-    //qDebug() << "doublymax:" << offsetDoublyElidedMax;
-    //qDebug() << "min:" << offsetMin;
-    //qDebug() << "max:" << offsetMax;
-    //qDebug() << "offset:" << offset;
 }
 
 void ScrollableLabel::calculateOffsets()
@@ -260,7 +263,7 @@ void ScrollableLabel::resizeEvent(QResizeEvent *event)
 
 void ScrollableLabel::wheelEvent(QWheelEvent *event)
 {
-    if(canBeELided)
+    if(fitness == Fitness::Partly)
     {
         if (event->angleDelta().y() > 0) {
             // Przewijanie w górę
@@ -278,11 +281,13 @@ void ScrollableLabel::wheelEvent(QWheelEvent *event)
         {
             offsetAtMin = true;
             offsetAtMax = false;
+            offsetAt = OffsetAt::Start;
         }
         if(offset >= offsetMax)
         {
             offsetAtMax = true;
             offsetAtMin = false;
+            offsetAt = OffsetAt::End;
         }
 
         clamp(offset, offsetMin, offsetMax);

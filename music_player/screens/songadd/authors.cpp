@@ -11,6 +11,8 @@ AuthorsList::AuthorsList(QWidget *parent)
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(view);
 
+    setFixedWidth(133);
+
     refresh();
 
     connect(hiddenWidget, &HiddenWidget::inSight,
@@ -32,7 +34,7 @@ AuthorsList::AuthorsList(QWidget *parent)
     });
 
 
-    emit hiddenWidget->inSight(false);
+    //emit hiddenWidget->inSight(false);
 }
 
 AuthorsList::~AuthorsList()
