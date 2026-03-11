@@ -16,7 +16,6 @@ SOURCES += \
     navigation/navigation.cpp \
     screens/screen/screen.cpp \
     screens/screen/form.cpp \
-    screens/songadd/authors.cpp \
     screens/test1/test1.cpp \
     screens/test2/test2.cpp \
     screens/test3/test3.cpp \
@@ -25,6 +24,9 @@ SOURCES += \
     widgets/hideablewidget/clickablelabel.cpp \
     widgets/hideablewidget/hiddenwidget.cpp \
     widgets/hideablewidget/hideablewidget.cpp \
+    widgets/listinput/itemlist.cpp \
+    widgets/listinput/listitem.cpp \
+    widgets/listinput/listview.cpp \
     widgets/nicelineedit/nicelineedit.cpp \
     screens/songadd/songadd.cpp \
     widgets/nicefileedit/nicefileedit.cpp \
@@ -49,7 +51,6 @@ HEADERS += \
     screens/screen/screen.h \
     screens/screen/form.h \
     screens/screens.h \
-    screens/songadd/authors.h \
     screens/test1/test1.h \
     screens/test2/test2.h \
     screens/test3/test3.h \
@@ -58,6 +59,9 @@ HEADERS += \
     widgets/hideablewidget/clickablelabel.h \
     widgets/hideablewidget/hiddenwidget.h \
     widgets/hideablewidget/hideablewidget.h \
+    widgets/listinput/itemlist.h \
+    widgets/listinput/listitem.h \
+    widgets/listinput/listview.h \
     widgets/nicelineedit/nicelineedit.h \
     screens/songadd/songadd.h \
     widgets/nicefileedit/nicefileedit.h \

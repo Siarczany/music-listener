@@ -4,7 +4,6 @@
 #include <QScrollArea>
 #include "widgets/nicefileedit/nicefileedit.h"
 #include <QFileInfo>
-#include "authors.h"
 #include "widgets/listinput/listinput.h"
 
 SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recreationData)
@@ -25,13 +24,12 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
     addWidget(file_nfe);
     NiceLineEdit* nazwa = addTextField("Nazwa", "Nazwa");
 
-    NiceLineEdit* author = new NiceLineEdit("Autor", this, NiceLineEdit::LineEdit::Suggestion);
-    addWidget(author);
-
-    SuggestionLineEdit* suggestionAuthor = static_cast<SuggestionLineEdit*>(author->getLineEdit());
-    suggestionAuthor->setQuery([this](const QString& text){
+    ListInput* li = new ListInput(this);
+    li->setInputLabel("Autor");
+    li->setListLabel("Autorzy");
+    li->setQuery([this](const QString& text){
         QStringList all;
-        all << "qwe" << "wer" << "ert" << "rty" << "tyu" << "yui" << " uio" << "iop" << "qe";
+        all << "asd" << "sdf" << "dfg" << "fgh" << "ghj" << "hjk" << "jkl";
 
         QStringList ret;
 
@@ -44,43 +42,14 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
         }
         return ret;
     });
-
-    AuthorsList* al = new AuthorsList(this);
-    HideableWidget* he = new HideableWidget(al, al->getHiddenWidget(), this);
-    he->setText("Autorzy");
-    he->setInSight(false);
-    addWidget(he);
-
-    ListInput* li = new ListInput(this);
+    li->setInSight(false);
     addWidget(li);
 
     addBackButton();
 
-    connect(suggestionAuthor, &SuggestionLineEdit::textChanged,
-            this, [suggestionAuthor, al](){
-        al->addFirst(suggestionAuthor->text());
-    });
-    connect(suggestionAuthor, &SuggestionLineEdit::choosen,
-            this, [suggestionAuthor, al](){
-        al->add(suggestionAuthor->text());
-        suggestionAuthor->clear();
-    });
-    connect(suggestionAuthor, &SuggestionLineEdit::returnPressed,
-            this, [suggestionAuthor, al](){
-        qDebug() << "enter";
-        al->add(suggestionAuthor->text());
-        suggestionAuthor->clear();
-    });
-
     connect(file_nfe, &NiceFileEdit::textChanged, this, [nazwa](const QString& text){
         QFileInfo file(text);
         nazwa->setText(file.baseName());
-
-    });
-
-    connect(suggestionAuthor, &SuggestionLineEdit::choosen,
-            this, [author](){
-        qDebug() << "choosen" << author->text();
     });
 
     if(recreationData != nullptr)
