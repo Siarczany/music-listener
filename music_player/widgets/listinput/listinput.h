@@ -20,6 +20,7 @@ public:
     void setInputLabel(const QString& text);
     void setListLabel(const QString& text);
     void setInSight(const bool visibility);
+    QStringList getList() const;
 private:
     QVBoxLayout* layout;
     NiceLineEdit* input;

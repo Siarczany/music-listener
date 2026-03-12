@@ -16,6 +16,7 @@ public:
     void setText(const QString& text);
     HiddenWidget* getWidget() const;
     void setInSight(const bool visibility);
+    void setInSightFull(const bool visibility);
 signals:
     //void inSight(const bool visibility);
 private:
@@ -28,6 +29,7 @@ private:
     QVBoxLayout* layout;
 
     bool visible = true;
+    bool visibleFull = true;
 
 };
 

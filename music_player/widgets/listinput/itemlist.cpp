@@ -26,6 +26,7 @@ ItemList::ItemList(QWidget *parent)
             this, [this](int index){
                 model->remove(index);
                 refresh();
+                emit deleted();
             });
 
     connect(view, &ListView::sizeChanged,
@@ -86,6 +87,17 @@ void ItemList::add(const QString &text)
 void ItemList::setLabel(const QString &text)
 {
     labelText = text;
+}
+
+QStringList ItemList::getList() const
+{
+    QStringList returning;
+    for(auto element : model->getAll())
+    {
+        ItemData* data = static_cast<ItemData*>(element);
+        returning.append(data->name);
+    }
+    return returning;
 }
 
 void ItemList::resizeEvent(QResizeEvent *event)

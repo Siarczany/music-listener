@@ -37,7 +37,7 @@ HideableWidget::~HideableWidget()
 void HideableWidget::setText(const QString &text)
 {
     label->setFullText(text);
-    qDebug() << "label" << label->width();
+    //qDebug() << "label" << label->width();
 }
 
 HiddenWidget *HideableWidget::getWidget() const
@@ -47,7 +47,11 @@ HiddenWidget *HideableWidget::getWidget() const
 
 void HideableWidget::setInSight(const bool visibility)
 {
+    if(visible == visibility)
+        return;
     visible = visibility;
+    if(visibleFull == false)
+        return;
 
     if(visible == true)
     {
@@ -62,4 +66,22 @@ void HideableWidget::setInSight(const bool visibility)
     }
 
     emit this->hidden->inSight(visible);
+}
+
+void HideableWidget::setInSightFull(const bool visibility)
+{
+    if(visibleFull == visibility)
+        return;
+    //qDebug() << visibility;
+    label->setVisible(visibility);
+    if(visibility == true)
+    {
+        setInSight(visible);
+    }
+    else
+    {
+        setInSight(false);
+    }
+
+    visibleFull = visibility;
 }

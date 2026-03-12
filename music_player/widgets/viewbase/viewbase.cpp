@@ -79,7 +79,7 @@ void ViewBase::refresh(const QVector<ModelData *> &data)
     }
     if(deletedAny){
         //setCurrentRow(-1);
-        qDebug() << "deleted so setting at -1";
+        //qDebug() << "deleted so setting at -1";
         setCurrentRow(-1);
     }
 }

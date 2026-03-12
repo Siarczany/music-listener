@@ -14,19 +14,33 @@ ListInput::ListInput(QWidget *parent)
     layout->addWidget(input, 0, Qt::AlignHCenter);
     layout->addWidget(hideable, 0, Qt::AlignHCenter);
 
+    //setInSight(false);
+    //hideable->setVisible(false);
+    hideable->setInSightFull(false);
+
     connect(suggestionInput, &SuggestionLineEdit::textChanged,
             this, [this](){
         list->addFirst(suggestionInput->text());
+        hideable->setInSightFull(true);
     });
     connect(suggestionInput, &SuggestionLineEdit::choosen,
             this, [this](){
         list->add(suggestionInput->text());
         suggestionInput->clear();
+        hideable->setInSightFull(true);
     });
     connect(suggestionInput, &SuggestionLineEdit::returnPressed,
             this, [this](){
         list->add(suggestionInput->text());
         suggestionInput->clear();
+        hideable->setInSightFull(true);
+    });
+    connect(list, &ItemList::deleted,
+            this, [this](){
+        if(list->count() == 0)
+        {
+            hideable->setInSightFull(false);
+        }
     });
 }
 
@@ -54,4 +68,9 @@ void ListInput::setListLabel(const QString &text)
 void ListInput::setInSight(const bool visibility)
 {
     hideable->setInSight(visibility);
+}
+
+QStringList ListInput::getList() const
+{
+    return list->getList();
 }

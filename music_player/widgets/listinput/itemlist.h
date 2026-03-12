@@ -15,8 +15,10 @@ public:
     void addFirst(const QString& text);
     void add(const QString& text);
     void setLabel(const QString& text);
+    QStringList getList() const;
 signals:
     void sizeChanged();
+    void deleted();
 protected:
     void resizeEvent(QResizeEvent *event) override;
 private:

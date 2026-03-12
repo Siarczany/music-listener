@@ -42,10 +42,16 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
         }
         return ret;
     });
-    li->setInSight(false);
     addWidget(li);
+    QPushButton* test = new QPushButton("test", this);
+    addWidget(test);
 
     addBackButton();
+
+    connect(test, &QPushButton::clicked,
+            this, [li](){
+        qDebug() << li->getList();
+    });
 
     connect(file_nfe, &NiceFileEdit::textChanged, this, [nazwa](const QString& text){
         QFileInfo file(text);
