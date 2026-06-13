@@ -4,8 +4,10 @@
 #include "model.h"
 #include <QListWidgetItem>
 
+// class definition of ViewBase needed for ItemWidgetBase by the compiler
 class ViewBase;
 
+// base class for the item that will sit in the list inside view
 class ItemWidgetBase : public QWidget
 {
     Q_OBJECT
@@ -15,48 +17,79 @@ public:
     {}
     virtual ~ItemWidgetBase() = default;
 
+    // when we click an item inside a list it can display something
+    //  for exmaple a delete button
     virtual void setFullyVisible(bool visible) = 0;
 
+    // updates the data inside this item
+    //  deleting all the items and creating them again is expensive I think
+    //  and if I remember correctly you can see visible flickering  when that
+    //  happenes
+    // also I planned to make a lazy loaded vieww at first so this wwould also be
+    //  for it xd
     virtual void update(ModelData* data) = 0;
 
+    // for signals to travel from an item to a list
     virtual void connectToList(ViewBase* list, int index) = 0;
 
+    // factory function because qt doesn't like templates and Q_OBJECTs together
+    // creates a new item of itself
     virtual ItemWidgetBase* nowy(QWidget* parent, ModelData* data = nullptr) = 0;
 };
 
+// intermediatory(idk how to spell) class between an item in a list(QWidget) and
+//  a QListWidget
+// for some ungodly reason qt allows to have a pointer to a class containing
+//  Q_OBJECT inside a template class but doesn't like them together in one class
+//  xd
+// maybe it is possible to create a virtual/skip this class but I've done it like
+//  this and it works xd
+// also at first I wanted to make a lazy loaded list so this class also holds the
+//  true index of an item
+// T is for an item widget
 template<typename T>
 class Item : public QListWidgetItem
 {
 public:
-    Item(QListWidget *parent)
-        : QListWidgetItem(parent)
-        , widget(new T(nullptr))
-    {
-        addToParent(parent, this, widget);
-    }
     Item<T>(QListWidget *parent, T* widget)
         : QListWidgetItem(parent)
         , widget(widget)
     {}
 
     ~Item(){
-        //delete widget;
+        // widget is created by the view and view is it's parent so nothing to
+        //  delete here
     }
 
-    void setTrueRow(const int row){trueRow = row;}
-    int getTrueRow() const{return trueRow;}
+    void setTrueRow(const int row)
+    {
+        trueRow = row;
+    }
+
+    int getTrueRow() const
+    {
+        return trueRow;
+    }
 
     void updateSizeHint()
     {
         setSizeHint(widget->sizeHint());
     }
 
-    T* getWidget() const{return widget;}
-    void setWidget(T* widget){
+    T* getWidget() const
+    {
+        return widget;
+    }
+
+    void setWidget(T* widget)
+    {
         this->widget = widget;
     }
 
-    Item<T>* nowy(QListWidget* parent){
+    // factory and odrazu dodaje ten item do view
+    // uses a factory of T(ItemWidget)
+    Item<T>* nowy(QListWidget* parent)
+    {
         auto* item = new Item<T>(parent, nullptr);
         T* widget = this->widget->nowy(parent);
         item->setWidget(widget);
@@ -65,9 +98,11 @@ public:
         return item;
     }
 private:
-    void addToParent(QListWidget* parent, Item<T>* item, T* widget){
+
+    void addToParent(QListWidget* parent, Item<T>* item, T* widget)
+    {
         parent->setItemWidget(item, widget);
-        item->updateSizeHint();
+        //item->updateSizeHint();
         widget->setFullyVisible(false);
     }
     int trueRow;

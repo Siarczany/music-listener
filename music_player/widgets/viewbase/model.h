@@ -2,38 +2,24 @@
 
 #include <QVector>
 
+// Base class for Data that the model will hold
 class ModelData
 {
 
 };
 
+// Holds and maganages the base class of data
 class Model
 {
 public:
-    void add(ModelData* newData){
-        data.append(newData);
-    }
-    void remove(const int index){
-        data.remove(index);
-    }
-    void update(const int index, ModelData* newData){
-        delete data[index];
-        data[index] = newData;
-    }
-    int count() const {
-        return data.count();
-    }
-    const QVector<ModelData*>& getAll() const {
-        return data;
-    }
-    const ModelData* get(const int index){
-        return data[index];
-    }
-    ~Model(){
-        for(auto& element : data){
-            delete element;
-        }
-    }
+    void add(ModelData* newData);
+    void remove(const int index);
+    void update(const int index, ModelData* newData);
+    // returns number of elements in the model
+    int count() const;
+    const QVector<ModelData*>& getAll() const;
+    const ModelData* get(const int index);
+    ~Model();
 private:
     QVector<ModelData*> data;
 };

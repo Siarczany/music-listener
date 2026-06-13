@@ -7,13 +7,18 @@
 #include <QVBoxLayout>
 #include "mylistwidget.h"
 
+// base class for view/list
+// view comes from mvvm(movel view viewmodel) so I am using it xd
 class ViewBase : public QWidget
 {
     Q_OBJECT
 public:
+    // because templates don't work with Q_OBJECT we just hold an instance of an
+    //  item and this item creates other items xd
     ViewBase(ItemWidgetBase* factory, QWidget* parent = nullptr);
     ~ViewBase();
 
+    // refreshes the view using data from a model
     void refresh(const QVector<ModelData*>& data);
     void setCurrentRow(const int row);
 signals:

@@ -16,11 +16,17 @@ SOURCES += \
     navigation/navigation.cpp \
     screens/screen/screen.cpp \
     screens/screen/form.cpp \
+    screens/songadd/hiddentextedit.cpp \
+    screens/songadd/songoptions.cpp \
+    screens/songadd/taginput.cpp \
+    screens/songadd/volumetunein.cpp \
     screens/test1/test1.cpp \
     screens/test2/test2.cpp \
     screens/test3/test3.cpp \
     screens/testoanie/testoanie.cpp \
     screens/login/login.cpp \
+    widgets/hideablelist/hiddenlist.cpp \
+    widgets/hideablelist/hideablelist.cpp \
     widgets/hideablewidget/clickablelabel.cpp \
     widgets/hideablewidget/hiddenwidget.cpp \
     widgets/hideablewidget/hideablewidget.cpp \
@@ -51,11 +57,17 @@ HEADERS += \
     screens/screen/screen.h \
     screens/screen/form.h \
     screens/screens.h \
+    screens/songadd/hiddentextedit.h \
+    screens/songadd/songoptions.h \
+    screens/songadd/taginput.h \
+    screens/songadd/volumetunein.h \
     screens/test1/test1.h \
     screens/test2/test2.h \
     screens/test3/test3.h \
     screens/testoanie/testoanie.h \
     screens/login/login.h \
+    widgets/hideablelist/hiddenlist.h \
+    widgets/hideablelist/hideablelist.h \
     widgets/hideablewidget/clickablelabel.h \
     widgets/hideablewidget/hiddenwidget.h \
     widgets/hideablewidget/hideablewidget.h \

@@ -5,6 +5,7 @@
 #include "widgets/nicefileedit/nicefileedit.h"
 #include <QFileInfo>
 #include "widgets/listinput/listinput.h"
+#include "songoptions.h"
 
 SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recreationData)
     : Form(parent)
@@ -22,7 +23,7 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
     // widgets setups
     NiceFileEdit* file_nfe = new NiceFileEdit("Plik", this);
     addWidget(file_nfe);
-    NiceLineEdit* nazwa = addTextField("Nazwa", "Nazwa");
+    NiceLineEdit* nazwa = addTextField("Nazwa 44444444444444444444243432432432ocwf98hmfa9hc9h9kfca8hfahlm84", "Nazwa");
 
     ListInput* li = new ListInput(this);
     li->setInputLabel("Autor");
@@ -45,6 +46,9 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
     addWidget(li);
     QPushButton* test = new QPushButton("test", this);
     addWidget(test);
+
+    SongOptions* so = new SongOptions(this);
+    addWidget(so);
 
     addBackButton();
 
