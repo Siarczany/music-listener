@@ -5,23 +5,6 @@
 #include "widgets/hideablewidget/hideablewidget.h"
 #include "hiddentextedit.h"
 
-class testtest : public QTextEdit
-{
-    Q_OBJECT
-public:
-    testtest(QWidget* parent = nullptr);
-    ~testtest();
-
-    HiddenWidget* getHiddenWidget() const;
-protected:
-    void resizeEvent(QResizeEvent* event) override;
-signals:
-    void sizeChanged();
-private:
-    HiddenWidget* hiddenWidget;
-    ResizableWidget* resizableWidget;
-};
-
 #include "taginput.h"
 #include "volumetunein.h"
 
@@ -37,8 +20,8 @@ private:
     HideableWidget* hideableWidget;
     HiddenTextEdit* hte;
 
-    HideableWidget* hide2;
-    testtest* tte;
+    HideableWidget* hideableWidget2;
+
 
     //HideableWidget* hide3;
     TagInput* tags;

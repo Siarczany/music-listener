@@ -7,10 +7,87 @@ HideableWidget::HideableWidget(QWidget *widget, HiddenWidget *hidden, QWidget *p
     , widget(widget)
     , layout(new QVBoxLayout(this))
 {
+    construct();
+}
+
+HideableWidget::HideableWidget(ClickableLabel *clickableLabel, QWidget *widget, HiddenWidget *hidden, QWidget *parent)
+    : QWidget(parent)
+    , label(clickableLabel)
+    , hidden(hidden)
+    , widget(widget)
+    , layout(new QVBoxLayout(this))
+{
+    construct();
+}
+
+HideableWidget::~HideableWidget()
+{
+
+}
+
+void HideableWidget::setText(const QString &text)
+{
+    label->setFullText(text);
+}
+
+HiddenWidget *HideableWidget::getWidget() const
+{
+    return hidden;
+}
+
+ClickableLabel *HideableWidget::getLabel() const
+{
+    return label;
+}
+
+void HideableWidget::setInSight(const bool visibility)
+{
+    if(visible == visibility)
+        return;
+    visible = visibility;
+    if(visibleFull == false)
+        return;
+/*
+    if(visible == true)
+    {
+        hidden->setFixedWidth(visibleWidth);
+        label->setFixedWidth(visibleWidth);
+    }
+    else // visible == false
+    {
+        visibleWidth = hidden->width();
+        hidden->setFixedWidth(0);
+        label->setFixedWidth(100);
+    }
+//*/
+    emit this->hidden->inSight(visible);
+
+}
+//*
+void HideableWidget::setInSightFull(const bool visibility)
+{
+    if(visibleFull == visibility)
+        return;
+    qDebug() << "setinsightfull";
+    label->setVisible(visibility);
+    if(visibility == true)
+    {
+        setInSight(visible);
+    }
+    else
+    {
+        setInSight(false);
+    }
+
+    visibleFull = visibility;
+}
+
+void HideableWidget::construct()
+{
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-    layout->addWidget(label);
-    layout->addWidget(this->widget);
+    layout->addWidget(label, 0, Qt::AlignHCenter);
+    layout->addWidget(this->widget, 0, Qt::AlignHCenter);
 
     connect(label, &ClickableLabel::pressed,
             this, [this](){
@@ -24,64 +101,13 @@ HideableWidget::HideableWidget(QWidget *widget, HiddenWidget *hidden, QWidget *p
 
     connect(hidden, &HiddenWidget::sizeChanged,
             this, [this](){
-        label->setFixedWidth(this->hidden->width());
-    });
-
+                qDebug() << visibleFull << visible;
+                //if(visibleFull && visible)
+                //{
+                    //label->setFixedWidth(this->hidden->width());
+                    //qDebug() << label->width();
+                //}
+                //label->shrink();
+            });
 }
-
-HideableWidget::~HideableWidget()
-{
-
-}
-
-void HideableWidget::setText(const QString &text)
-{
-    label->setFullText(text);
-    //qDebug() << "label" << label->width();
-}
-
-HiddenWidget *HideableWidget::getWidget() const
-{
-    return hidden;
-}
-
-void HideableWidget::setInSight(const bool visibility)
-{
-    if(visible == visibility)
-        return;
-    visible = visibility;
-    if(visibleFull == false)
-        return;
-
-    if(visible == true)
-    {
-        hidden->setFixedWidth(visibleWidth);
-        label->setFixedWidth(visibleWidth);
-    }
-    else // visible == false
-    {
-        visibleWidth = hidden->width();
-        hidden->setFixedWidth(0);
-        label->setFixedWidth(100);
-    }
-
-    emit this->hidden->inSight(visible);
-}
-
-void HideableWidget::setInSightFull(const bool visibility)
-{
-    if(visibleFull == visibility)
-        return;
-    //qDebug() << visibility;
-    label->setVisible(visibility);
-    if(visibility == true)
-    {
-        setInSight(visible);
-    }
-    else
-    {
-        setInSight(false);
-    }
-
-    visibleFull = visibility;
-}
+//*/

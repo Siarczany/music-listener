@@ -19,6 +19,15 @@ void ScrollableLabel::setFullText(const QString &text)
     updateElidedText();
 }
 
+void ScrollableLabel::shrink()
+{
+    if(fitness == Fitness::All)
+    {
+        QFontMetrics fm(font());
+        setFixedWidth(fm.horizontalAdvance(fullText));
+    }
+}
+
 // updates the text based on how it fits
 // text is here green tf
 void ScrollableLabel::updateElidedText()

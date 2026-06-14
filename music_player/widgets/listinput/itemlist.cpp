@@ -18,9 +18,7 @@ ItemList::ItemList(QWidget *parent)
     refresh();
 
     connect(hiddenWidget, &HiddenWidget::inSight,
-            this, [this](bool visibility){
-                setVisible(visibility);
-            });
+            this, ItemList::inSight);
 
     connect(view, &ListView::deleted,
             this, [this](int index){
@@ -84,7 +82,7 @@ void ItemList::add(const QString &text)
     refresh();
 }
 
-void ItemList::setLabel(const QString &text)
+void ItemList::setLabelText(const QString &text)
 {
     labelText = text;
 }
@@ -104,6 +102,21 @@ void ItemList::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
     emit hiddenWidget->sizeChanged();
+    emit sizeChanged();
+}
+
+void ItemList::inSight(bool visibility)
+{
+    if(visibility == false)
+    {
+        hwd.width = width();
+        setFixedWidth(10);
+    }
+    else // visibility == true
+    {
+        setFixedWidth(hwd.width);
+    }
+    setVisible(visibility);
 }
 
 void ItemList::refresh()

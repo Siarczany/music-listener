@@ -6,35 +6,7 @@ NiceLineEdit::NiceLineEdit(QWidget* parent, LineEdit type)
     //, lineEdit(new ResizableLineEdit(this))
     , layout(new QVBoxLayout(this))
 {
-    switch(type)
-    {
-        case LineEdit::Resizable:
-        {
-            lineEdit = new ResizableLineEdit(this);
-            break;
-        }
-        case LineEdit::Suggestion:
-        {
-            lineEdit = new SuggestionLineEdit(this);
-            break;
-        }
-        default:
-        {
-            lineEdit = new ResizableLineEdit(this);
-        }
-    }
-
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
-    layout->addWidget(label);
-    layout->addWidget(lineEdit);
-
-    connect(lineEdit, &ResizableLineEdit::sizeChanged, this, [this]()
-            {
-        label->setFixedWidth(lineEdit->width());
-    });
-
-    connect(lineEdit, &ResizableLineEdit::textChanged, this, &NiceLineEdit::textChanged);
+    construct(type);
 }
 
 NiceLineEdit::NiceLineEdit(const QString &text, QWidget *parent, LineEdit type)
@@ -43,6 +15,16 @@ NiceLineEdit::NiceLineEdit(const QString &text, QWidget *parent, LineEdit type)
     label->setFullText(text);
     label->setToolTip(text);
     lineEdit->setToolTip(text);
+}
+
+NiceLineEdit::NiceLineEdit(ScrollableLabel *label, QWidget *parent, LineEdit type)
+    : QWidget(parent)
+    , label(label)
+    //, lineEdit(new ResizableLineEdit(this))
+    , layout(new QVBoxLayout(this))
+{
+    label->setParent(this);
+    construct(type);
 }
 
 NiceLineEdit::~NiceLineEdit()
@@ -75,3 +57,44 @@ ResizableLineEdit *NiceLineEdit::getLineEdit() const
 {
     return lineEdit;
 }
+
+ScrollableLabel *NiceLineEdit::getLabel() const
+{
+    return label;
+}
+
+void NiceLineEdit::construct(LineEdit type)
+{
+    switch(type)
+    {
+    case LineEdit::Resizable:
+    {
+        lineEdit = new ResizableLineEdit(this);
+        break;
+    }
+    case LineEdit::Suggestion:
+    {
+        lineEdit = new SuggestionLineEdit(this);
+        break;
+    }
+    default:
+    {
+        lineEdit = new ResizableLineEdit(this);
+    }
+    }
+
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
+    layout->addWidget(label);
+    layout->addWidget(lineEdit);
+
+    connect(lineEdit, &ResizableLineEdit::sizeChanged, this, [this]()
+            {
+                label->setFixedWidth(lineEdit->width());
+                //label->shrink();
+            });
+
+    connect(lineEdit, &ResizableLineEdit::textChanged, this, &NiceLineEdit::textChanged);
+}
+
+

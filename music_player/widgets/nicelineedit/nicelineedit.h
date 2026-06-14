@@ -17,8 +17,10 @@ public:
           Resizable
         , Suggestion
     };
+
     NiceLineEdit(QWidget* parent = nullptr, LineEdit type = LineEdit::Resizable);
     NiceLineEdit(const QString& text, QWidget* parent = nullptr, LineEdit type = LineEdit::Resizable);
+    NiceLineEdit(ScrollableLabel* label, QWidget* parent = nullptr, LineEdit type = LineEdit::Resizable);
     ~NiceLineEdit();
     void setLabel(const QString& text);
     void setText(const QString& text);
@@ -26,6 +28,9 @@ public:
     const QString text();
 
     ResizableLineEdit* getLineEdit() const;
+    ScrollableLabel* getLabel() const;
+
+
 
 signals:
     void textChanged(const QString& text);
@@ -33,6 +38,7 @@ private:
     ScrollableLabel* label;
     ResizableLineEdit* lineEdit;
     QVBoxLayout* layout;
+    void construct(LineEdit type);
 };
 
 #endif // NICELINEEDIT_H

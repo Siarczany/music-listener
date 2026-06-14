@@ -14,7 +14,7 @@ public:
     int count() const;
     void addFirst(const QString& text);
     void add(const QString& text);
-    void setLabel(const QString& text);
+    void setLabelText(const QString& text);
     QStringList getList() const;
 signals:
     void sizeChanged();
@@ -23,7 +23,15 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 private:
     QVBoxLayout* layout;
+
     HiddenWidget* hiddenWidget;
+    struct HiddenWidgetData
+    {
+        int width;
+    };
+    HiddenWidgetData hwd;
+    void inSight(bool visibility);
+
     Model* model;
     ListView* view;
 

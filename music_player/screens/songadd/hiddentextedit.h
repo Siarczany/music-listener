@@ -19,6 +19,12 @@ signals:
     void sizeChanged();
 private:
     HiddenWidget* hiddenWidget;
+    struct HiddenWidgetData
+    {
+        int width;
+    };
+    HiddenWidgetData hwd;
+    void inSight(bool visibility);
     ResizableWidget* resizableWidget;
 };
 

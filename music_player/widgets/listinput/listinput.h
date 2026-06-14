@@ -14,6 +14,7 @@ class ListInput : public QWidget
     Q_OBJECT
 public:
     ListInput(QWidget* parent = nullptr);
+    ListInput(ScrollableLabel* label, QWidget* parent = nullptr);
     ~ListInput();
 
     void setQuery(std::function<QStringList(const QString&)> function);
@@ -21,12 +22,19 @@ public:
     void setListLabel(const QString& text);
     void setInSight(const bool visibility);
     QStringList getList() const;
+    NiceLineEdit* getInput() const;
+    ItemList* getListWidget() const;
+    HideableWidget* getHideable() const;
 private:
     QVBoxLayout* layout;
     NiceLineEdit* input;
     SuggestionLineEdit* suggestionInput;
     ItemList* list;
     HideableWidget* hideable;
+
+    void construct();
+    void setListLabelWidth();
+
 };
 
 #endif // LISTINPUT

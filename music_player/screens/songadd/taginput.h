@@ -10,8 +10,19 @@ public:
     TagInput(QWidget* parent = nullptr);
     ~TagInput();
     QStringList getList() const;
+    HiddenWidget* getHiddenWidget() const;
+    ClickableLabel* getLabel() const;
+protected:
+    void resizeEvent(QResizeEvent *event);
 private:
-
+    ClickableLabel* label;
+    HiddenWidget* hiddenWidget;
+    struct HiddenWidgetData
+    {
+        int width;
+    };
+    HiddenWidgetData hwd;
+    void inSight(bool visibility);
 };
 
 #endif // TAGINPUT

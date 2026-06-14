@@ -15,6 +15,7 @@ public:
 
     // QLabel's setText is used to actually display the text so no overriding it :(
     void setFullText(const QString &text);
+    void shrink();
 private:
     struct Range
     {
