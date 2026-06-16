@@ -111,46 +111,11 @@ ScrollableLabel::Fitness ScrollableLabel::calculateFitness(const int availableSp
 
 //this function calculates min and max offset that results in text being double elided
 // it assumes that the text is larger than available space
-void ScrollableLabel::calculateOffsetDoublyElidedBounds(const int availableSpace, const QString& text, const QString elider, const QFont font)
+void ScrollableLabel::calculateDoublyElidedBounds(const int availableSpace, const QString& text, const QString elider, const QFont font)
 {
-
-/*
-    // getting the font as font can change the size of letters
-    QFontMetrics fm(font());
-    
-    // if available space is larger than the text simply display the full text?
-    if(availableSpace >= fm.horizontalAdvance(text))
-    {
-        fitness = Fitness::All;
-        //offsetAt = OffsetAt::Start;
-        return;
-    }
-
-    // '...' are used as a elider(?). I mean they hide the text like this "...onna giv..."
-    const int dotsWidth = fm.horizontalAdvance("...");
-
-    // if there is less space than 2 eliders display one
-    if(2*dotsWidth > availableSpace)
-    {
-        fitness = Fitness::Elider;
-        return;
-    }
-
-    // if there is less space than 1 elider display none xd
-    if(availableSpace < dotsWidth)
-    {
-        fitness = Fitness::None;
-        return;
-    }
-
-    // now the only option left is that text that can be elided from both sides
-    //  and that requires some calculations :(
-    fitness = Fitness::Partly;
-//*/
-
-    Range offsetDoublyELided;
     QFontMetrics fm(font);
     const int eliderWidth = fm.horizontalAdvance(elider);
+
 
     //
     // left side offset
@@ -160,32 +125,17 @@ void ScrollableLabel::calculateOffsetDoublyElidedBounds(const int availableSpace
     int pixels = 0;
     int chars = 0;
 
-    // we calculate i first letters of the text + elider to see when it takes up more
-    //  than available space like this for exmaple "never gonn..."
-    while(pixels <= availableSpace)
+    while(pixels <= eliderWidth)
     {
         chars++;
-        pixels = fm.horizontalAdvance(text.first(chars)) + eliderWidth;
-        qDebug() << "first loop pixels: " << pixels << text.first(chars) << availableSpace;
-    }
-    // because we increment chars in the loop and this loop failed that means previous one passed
-    //  so we subtract 1 from it
-    chars--;
-
-    const QString fitsFromLeft = text.first(chars);
-    //qDebug() << fitsFromLeft;
-
-    pixels = eliderWidth + fm.horizontalAdvance(fitsFromLeft) + eliderWidth;
-    while(pixels > availableSpace)
-    {
-        chars--;
-        pixels = eliderWidth + fm.horizontalAdvance(fitsFromLeft.last(chars)) + eliderWidth;
-        qDebug() << "second loop pixels: " << pixels << fitsFromLeft.last(chars) << availableSpace;
+        pixels = fm.horizontalAdvance(text.first(chars));
     }
 
-    offsetDoublyElidedMin = fm.horizontalAdvance(text.first(fitsFromLeft.size() - chars + 1));
-    offsetDoublyELided.min = fm.horizontalAdvance(text.first(fitsFromLeft.size() - chars + 1));
-    qDebug() << offsetDoublyElidedMin << text.first(fitsFromLeft.size() - chars + 1);
+    // from this pixel we can doubly elide
+    doublyElidedPixels.min = pixels;
+
+    // 1 character back scrolling can start as we don't want to scroll eliderWidth+ at the beginning for the text to move by 1 character xd
+    offsetRange.min = fm.horizontalAdvance(text.first(chars-1));
 
     //
     // right side offset
@@ -194,74 +144,17 @@ void ScrollableLabel::calculateOffsetDoublyElidedBounds(const int availableSpace
     pixels = 0;
     chars = 0;
 
-    while(pixels <= availableSpace)
+    while(pixels <= availableSpace - eliderWidth)
     {
         chars++;
-        pixels = eliderWidth + fm.horizontalAdvance(text.last(chars));
-        //qDebug() << "first loop pixels: " << pixels << text.last(chars) << availableSpace;
-    }
-    chars--;
-
-    const QString fitsFromRight = text.last(chars);
-    //qDebug() << fitsFromRight;
-
-    pixels = eliderWidth + fm.horizontalAdvance(fitsFromRight) + eliderWidth;
-    while(pixels > availableSpace)
-    {
-        chars--;
-        pixels = eliderWidth + fm.horizontalAdvance(fitsFromRight.first(chars)) + eliderWidth;
-        //qDebug() << "second loop pixels: " << pixels << fitsFromRight.first(chars) << availableSpace;
+        pixels = fm.horizontalAdvance(text.last(chars));
     }
 
-    offsetDoublyElidedMax = fm.horizontalAdvance(text) - fm.horizontalAdvance(text.last(fitsFromRight.size() + 1));
-    offsetDoublyELided.max = fm.horizontalAdvance(text) - fm.horizontalAdvance(text.last(fitsFromRight.size() + 1));
-    //qDebug() << fm.horizontalAdvance(text) << availableSpace;
-    //qDebug() << offsetDoublyElidedMax << text.last(fitsFromRight.size() + 1);
-/*
-    for(int i = 0; i<text.size(); i++)
-    {
-        if(fm.horizontalAdvance(text.first(i)) == offsetDoublyElidedMax)
-        {
-            qDebug() << text.first(i);
-            qDebug() << text;
-        }
-    }
-//*/
-}
+    // at this pixel doubly elide stops
+    doublyElidedPixels.max = fm.horizontalAdvance(text.first(text.size() - chars));
 
-void ScrollableLabel::calculateOffsetBounds(const QString& text)
-{
-    if(fitness == Fitness::Partly)
-    {
-        QFontMetrics fm(font());
-
-        for(int i = 0; i<text.length(); i++)
-        {
-            if(fm.horizontalAdvance(text.first(i + 1)) == offsetDoublyElidedMin)
-            {
-                offsetMin = fm.horizontalAdvance(text.first(i));
-                break;
-            }
-        }
-        for(int i = 0; i<text.length(); i++)
-        {
-            if(fm.horizontalAdvance(text.first(i)) == offsetDoublyElidedMax)
-            {
-                offsetMax = fm.horizontalAdvance(text.first(i+1));
-                break;
-            }
-        }
-    }
-    clamp(offset, offsetMin, offsetMax);
-
-    if(offsetAt == OffsetAt::Start)
-    {
-        offset = offsetMin;
-    }
-    if(offsetAt == OffsetAt::End)
-    {
-        offset = offsetMax;
-    }
+    // one character foreward from here we stop scrolling because the same issue as at the beginning
+    offsetRange.max = fm.horizontalAdvance(text.first(text.size() - chars + 1));
 }
 
 void ScrollableLabel::calculateOffsets()
@@ -269,10 +162,23 @@ void ScrollableLabel::calculateOffsets()
     fitness = calculateFitness(width(), fullText, "...", font());
     if(fitness == Fitness::Partly)
     {
-        calculateOffsetDoublyElidedBounds(width(), fullText, "...", font());
-    }
+        calculateDoublyElidedBounds(width(), fullText, "...", font());
 
-    calculateOffsetBounds(fullText);
+        clamp(offset, offsetRange.min, offsetRange.max);
+
+        // technically redundant as the text always sticks to the left side(unless u r using arabic or something idk)
+        if(offsetAt == OffsetAt::Start)
+        {
+            offset = offsetRange.min;
+        }
+
+        // makes it so that during resizing while increasing size while the text is max scrolled to the right the text actually sticks
+        //  to the right side
+        if(offsetAt == OffsetAt::End)
+        {
+            offset = offsetRange.max;
+        }
+    }
 }
 
 QString ScrollableLabel::elideBothSides(const QString &text, const int offset, const int width)
@@ -281,7 +187,8 @@ QString ScrollableLabel::elideBothSides(const QString &text, const int offset, c
     const QString dots = "...";
     const int dotsWidth = fm.horizontalAdvance(dots);
 
-    if(offset < offsetDoublyElidedMin)
+    // if we are  at the beginning just elide normally
+    if(offset < doublyElidedPixels.min)
     {
         for(int i = 0; i<text.length(); i++)
         {
@@ -292,7 +199,8 @@ QString ScrollableLabel::elideBothSides(const QString &text, const int offset, c
         }
     }
 
-    if(offsetDoublyElidedMax < offset)
+    // the same for the end/right side
+    if(doublyElidedPixels.max < offset)
     {
         for(int i = 0; i<text.length(); i++)
         {
@@ -303,8 +211,11 @@ QString ScrollableLabel::elideBothSides(const QString &text, const int offset, c
         }
     }
 
+    // if not both of them that means we are in the middle :(
+
     int startingChar = 0;
 
+    // calculate at what character offset currently is
     for(int i = 0; i<text.length(); i++)
     {
         if(fm.horizontalAdvance(text.first(i)) >= offset)
@@ -313,11 +224,16 @@ QString ScrollableLabel::elideBothSides(const QString &text, const int offset, c
             break;
         }
     }
+
+
+    // basically checks "......", then "...a...", then "...ab..."
+    //  till it won't fit anymore at which boit we have found what we were looking for
     //qDebug() << "startingChar:" << startingChar;
     for(int i = 0; i<text.length() - startingChar; i++)
     {
-        if(dotsWidth + fm.horizontalAdvance(text.first(startingChar + i + 1)
-                                        .last(i + 1)) + dotsWidth > width)
+        if(dotsWidth + fm.horizontalAdvance(
+                                            text.first(startingChar + i + 1).last(i + 1)
+                                             ) + dotsWidth > width)
         {
             if(i == 0)
             {
@@ -342,52 +258,31 @@ void ScrollableLabel::wheelEvent(QWheelEvent *event)
 {
     if(fitness == Fitness::Partly)
     {
-        if (event->angleDelta().y() > 0) {
-            // Przewijanie w górę
-            //qDebug() << "Scroll w górę";
-            offset += pixelsScrolled;
-        }
-        else
+        double scrollAmount = event->angleDelta().y() * scrollSpeed;
+        // add fractional/decimal(??) part to the reminder
+        offsetRemainder += scrollAmount - (int)scrollAmount;
+        // if remainder has gone past -1 or 1 than we add whole value of remainder to scrollAmount and leave the fractional part
+        if(-1 > offsetRemainder || offsetRemainder > 1)
         {
-            // Przewijanie w dół
-            //qDebug() << "Scroll w dół";
-            offset -= pixelsScrolled;
+            scrollAmount += (int)offsetRemainder;
+            offsetRemainder = offsetRemainder - (int)offsetRemainder;
         }
+        offset += scrollAmount;
 
-        if(offset <= offsetMin)
+        // if wwe are at a start of an end set a flag so the text will stick to respective side
+        if(offset <= offsetRange.min)
         {
-            //offsetAtMin = true;
-            //offsetAtMax = false;
             offsetAt = OffsetAt::Start;
         }
-        if(offset >= offsetMax)
+        if(offset >= offsetRange.max)
         {
-            //offsetAtMax = true;
-            //offsetAtMin = false;
             offsetAt = OffsetAt::End;
         }
 
-        clamp(offset, offsetMin, offsetMax);
+        clamp(offset, offsetRange.min, offsetRange.max);
 
-        //qDebug() << offset << width();
         setText(elideBothSides(fullText, offset, width()));
     }
-
-    qDebug() << "offsetDoublyElidedMin:" << offsetDoublyElidedMin;
-    qDebug() << "offsetDoublyElidedMax:" << offsetDoublyElidedMax;
-    qDebug() << "offsetMin:" << offsetMin;
-    qDebug() << "offsetMax:" << offsetMax;
-    //qDebug() << "offsetAtMin:" << offsetAtMin;
-    //qDebug() << "offsetAtMax:" << offsetAtMax;
-
-
-
-    // Możesz też sprawdzić wartość delta
-    //int delta = event->angleDelta().y();
-    //qDebug() << "Delta:" << delta;
-
-
-    //event->accept(); // lub event->ignore() jeśli chcesz propagować dalej
 }
 
 
