@@ -85,6 +85,7 @@ HEADERS += \
     widgets/scrollablelabel/scrollablelabel.h \
     widgets/listinput/listinput.h \
     widgets/viewbase/item.h \
+    widgets/viewbase/item_impl.h \
     widgets/viewbase/model.h \
     widgets/viewbase/mylistwidget.h \
     widgets/viewbase/viewbase.h

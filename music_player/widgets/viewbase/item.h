@@ -51,60 +51,41 @@ template<typename T>
 class Item : public QListWidgetItem
 {
 public:
-    Item<T>(QListWidget *parent, T* widget)
-        : QListWidgetItem(parent)
-        , widget(widget)
-    {}
+    Item<T>(QListWidget *parent, T* widget);
 
-    ~Item(){
-        // widget is created by the view and view is it's parent so nothing to
-        //  delete here
-    }
+    ~Item();
 
-    void setTrueRow(const int row)
-    {
-        trueRow = row;
-    }
+    // there were plans to do a lazy loaded list so here is something I would need
+    //  I think
+    void setTrueRow(const int row);
 
-    int getTrueRow() const
-    {
-        return trueRow;
-    }
+    // the same as above, this doesn't even have an implementation xd
+    int getTrueRow() const;
 
-    void updateSizeHint()
-    {
-        setSizeHint(widget->sizeHint());
-    }
+    // sets size hint for this Item
+    //  qt is qt and there is an actual widget in the list QListWidget
+    //  and there is QListWidgetItem this is this class which holds the actual
+    //   widget
+    void updateSizeHint();
 
-    T* getWidget() const
-    {
-        return widget;
-    }
+    // since this isn't the actual widget we need a way to get it
+    T* getWidget() const;
 
-    void setWidget(T* widget)
-    {
-        this->widget = widget;
-    }
+    // -||- set it
+    void setWidget(T* widget);
 
-    // factory and odrazu dodaje ten item do view
-    // uses a factory of T(ItemWidget)
-    Item<T>* nowy(QListWidget* parent)
-    {
-        auto* item = new Item<T>(parent, nullptr);
-        T* widget = this->widget->nowy(parent);
-        item->setWidget(widget);
-
-        addToParent(parent, item, widget);
-        return item;
-    }
+    // factory because as in ItemWidgetBase qt doesn;t like templates and
+    //  Q_OBJECTs
+    // also we add the item to the list in this function
+    Item<T>* nowy(QListWidget* parent);
 private:
 
-    void addToParent(QListWidget* parent, Item<T>* item, T* widget)
-    {
-        parent->setItemWidget(item, widget);
-        //item->updateSizeHint();
-        widget->setFullyVisible(false);
-    }
+    void addToParent(QListWidget* parent, Item<T>* item, T* widget);
+
+    // not used currently
     int trueRow;
+
     T* widget;
 };
+
+#include "item_impl.h"
