@@ -4,6 +4,7 @@
 #include <QListWidget>
 #include "model.h"
 #include "item.h"
+#include "itemwidgetbase.h"
 #include <QVBoxLayout>
 #include "mylistwidget.h"
 

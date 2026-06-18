@@ -43,10 +43,9 @@ SOURCES += \
     widgets/resizablewidget/resizeablewidget.cpp \
     widgets/scrollablelabel/scrollablelabel.cpp \
     widgets/listinput/listinput.cpp \
-    widgets/viewbase/item.cpp \
-    widgets/viewbase/model.cpp \
     widgets/viewbase/mylistwidget.cpp \
-    widgets/viewbase/viewbase.cpp
+    widgets/viewbase/viewbase.cpp \
+    widgets/viewbase/model.cpp
 
 
 HEADERS += \
@@ -86,7 +85,9 @@ HEADERS += \
     widgets/listinput/listinput.h \
     widgets/viewbase/item.h \
     widgets/viewbase/item_impl.h \
+    widgets/viewbase/itemwidgetbase.h \
     widgets/viewbase/model.h \
+    widgets/viewbase/modeldata.h \
     widgets/viewbase/mylistwidget.h \
     widgets/viewbase/viewbase.h
 

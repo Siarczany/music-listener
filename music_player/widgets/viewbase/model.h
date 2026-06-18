@@ -1,12 +1,7 @@
 #pragma once
 
 #include <QVector>
-
-// Base class for Data that the model will hold
-class ModelData
-{
-
-};
+#include "modeldata.h"
 
 // Holds and maganages the base class of data
 class Model
