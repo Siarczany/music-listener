@@ -1,0 +1,1 @@
+na podstawie ResizableLineEdit, niekompilowane wwięc może nie działać xd

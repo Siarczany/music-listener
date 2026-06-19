@@ -3,6 +3,9 @@
 
 #include <QFrame>
 
+// widget that tracks how much the mouse was dragged
+//  as well as changing the cursor to resizable icon
+// q frame because I wanted to see the "hitbox" during writing it
 class DragWidget : public QFrame
 {
     Q_OBJECT
@@ -20,6 +23,8 @@ signals:
     void released();
 private:
     bool dragging = false;
+
+    // starting point of a click in global coords
     QPoint startPoint;
 };
 

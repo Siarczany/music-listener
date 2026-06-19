@@ -8,8 +8,8 @@ DragWidget::DragWidget(QWidget *parent)
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setFrameStyle(QFrame::NoFrame);
     //setFrameStyle(QFrame::Box); // hitbox xd
-    setAcceptDrops(true);
-    setCursor(Qt::SizeHorCursor);
+    //setAcceptDrops(true); // idk what this does really xd
+    setCursor(Qt::SizeHorCursor); // for the user to know that this will resize things
 }
 
 DragWidget::~DragWidget()
@@ -24,7 +24,6 @@ void DragWidget::mousePressEvent(QMouseEvent *event)
         startPoint = event->globalPosition().toPoint();
         dragging = true;
         emit pressed();
-        //qDebug() << "pressed: " << event->globalPosition().toPoint();
     }
 }
 
@@ -34,7 +33,6 @@ void DragWidget::mouseReleaseEvent(QMouseEvent *event)
     {
         dragging = false;
         emit released();
-        //qDebug() << "released";
     }
 }
 
@@ -43,6 +41,5 @@ void DragWidget::mouseMoveEvent(QMouseEvent *event)
     if(dragging)
     {
         emit dragged(event->globalPosition().toPoint() - startPoint);
-        //qDebug() << "dragged: " << event->globalPosition().toPoint() - startPoint;
     }
 }
