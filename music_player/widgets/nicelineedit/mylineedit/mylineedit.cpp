@@ -6,6 +6,7 @@ ResizableLineEdit::ResizableLineEdit(QWidget *parent)
     : QLineEdit(parent)
     , resizableWidget(new ResizableWidget(this, this))
 {
+    // signalf or upper widget
     connect(resizableWidget, &ResizableWidget::sizeChanged,
                   this, [this](){
         emit sizeChanged();
@@ -20,6 +21,8 @@ ResizableLineEdit::~ResizableLineEdit()
 void ResizableLineEdit::resizeEvent(QResizeEvent *event)
 {
     QLineEdit::resizeEvent(event);
+
+    // update the resizers
     resizableWidget->resize();
 }
 

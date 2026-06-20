@@ -38,6 +38,7 @@ void SuggestionLineEdit::focusOutEvent(QFocusEvent *event)
 
 void SuggestionLineEdit::setupPopup(const QString& text)
 {
+    // if text is "" hide the popup
     if(this->text().isEmpty())
     {
         popup->hide();
@@ -55,14 +56,22 @@ void SuggestionLineEdit::setupPopup(const QString& text)
 
     if(!suggestions.isEmpty())
     {
-        popup->setVisible(true);
+        // idk what was chat pierdoling
+        //  maybe with sqlqueries that take longer this will do something idk
         QApplication::processEvents();
+
+        // the bottom of lineedit in global coords
         QPoint below = mapToGlobal(QPoint(0, this->height()));
+
+        // move the popup to there
         popup->move(below);
+
+        // calculating the size required for all elements
         int rowHeight = popup->sizeHintForRow(0);
         int rows = suggestions.size();
         int marginTop = popup->contentsMargins().top();
         int marginBottom = popup->contentsMargins().bottom();
+
         popup->resize(this->width(), marginTop + rows * rowHeight + marginBottom);
         popup->show();
     }
@@ -70,16 +79,4 @@ void SuggestionLineEdit::setupPopup(const QString& text)
     {
         popup->hide();
     }
-}
-
-const QStringList SuggestionLineEdit::queryDatabase(const QString &text)
-{
-    QStringList list;
-    //list << "a" << "b" << "ab" << "c" << "ac" << "bc" << "abc" << "d";
-    for(int i = 0; i<text.size(); i++)
-    {
-        list << text;
-    }
-
-    return list;
 }

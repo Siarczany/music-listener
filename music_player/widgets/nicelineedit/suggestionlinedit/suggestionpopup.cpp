@@ -1,9 +1,9 @@
 #include "suggestionpopup.h"
 
 SuggestionPopup::SuggestionPopup(QWidget *parent) : QListWidget(parent) {
-    setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    setFocusPolicy(Qt::NoFocus);
-    setMouseTracking(true);
+    // the popup is a actually the same as the tooltip or something idk xd
+    setWindowFlags(Qt::ToolTip);
+
     setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
@@ -19,5 +19,6 @@ void SuggestionPopup::mousePressEvent(QMouseEvent *event) {
         emit itemChosen(item->text());
     }
 
+    // hide the popup after selecting a wanted text
     hide();
 }

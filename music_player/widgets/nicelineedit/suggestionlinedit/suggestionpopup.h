@@ -5,6 +5,7 @@
 #include <functional>
 #include <QMouseEvent>
 
+// a popup with a text list that you can click and it will select it
 class SuggestionPopup : public QListWidget {
     Q_OBJECT
 public:

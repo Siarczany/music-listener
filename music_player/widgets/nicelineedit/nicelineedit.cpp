@@ -1,26 +1,27 @@
 #include "nicelineedit.h"
 
+// basic constructor
 NiceLineEdit::NiceLineEdit(QWidget* parent, LineEdit type)
     : QWidget(parent)
     , label(new ScrollableLabel(this))
-    //, lineEdit(new ResizableLineEdit(this))
     , layout(new QVBoxLayout(this))
 {
     construct(type);
 }
 
+// basic constructor but sets label as well as tooltips
 NiceLineEdit::NiceLineEdit(const QString &text, QWidget *parent, LineEdit type)
     : NiceLineEdit(parent, type)
 {
-    label->setFullText(text);
-    label->setToolTip(text);
-    lineEdit->setToolTip(text);
+    setLabel(text);
+    setToolTip(text);
 }
 
+// constructor that takes in an already existing label
+//  why is label in a fucking comment blue dxafafcbsaf
 NiceLineEdit::NiceLineEdit(ScrollableLabel *label, QWidget *parent, LineEdit type)
     : QWidget(parent)
     , label(label)
-    //, lineEdit(new ResizableLineEdit(this))
     , layout(new QVBoxLayout(this))
 {
     label->setParent(this);
@@ -65,6 +66,7 @@ ScrollableLabel *NiceLineEdit::getLabel() const
 
 void NiceLineEdit::construct(LineEdit type)
 {
+    // based of the type create a corresponding lineedit
     switch(type)
     {
     case LineEdit::Resizable:
@@ -83,15 +85,16 @@ void NiceLineEdit::construct(LineEdit type)
     }
     }
 
+    // layout stuff
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addWidget(label);
     layout->addWidget(lineEdit);
 
+    // resize the label along with the line edit
     connect(lineEdit, &ResizableLineEdit::sizeChanged, this, [this]()
             {
                 label->setFixedWidth(lineEdit->width());
-                //label->shrink();
             });
 
     connect(lineEdit, &ResizableLineEdit::textChanged, this, &NiceLineEdit::textChanged);
