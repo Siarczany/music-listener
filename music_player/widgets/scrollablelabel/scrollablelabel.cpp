@@ -24,8 +24,17 @@ void ScrollableLabel::shrink()
     if(fitness == Fitness::All)
     {
         QFontMetrics fm(font());
-        setFixedWidth(fm.horizontalAdvance(fullText));
+        int width = fm.horizontalAdvance(fullText);
+        if(width != 0)
+        {
+            setFixedWidth(width);
+        }
     }
+}
+
+void ScrollableLabel::setShrinkInsteadOfResize0(bool value)
+{
+    shrinkInsteadOfResize0 = value;
 }
 
 // updates the text based on how it fits
@@ -248,7 +257,15 @@ QString ScrollableLabel::elideBothSides(const QString &text, const int offset, c
 
 void ScrollableLabel::resizeEvent(QResizeEvent *event)
 {
-    QLabel::resizeEvent(event);
+    if(shrinkInsteadOfResize0 == true && event->size().width() == 0)
+    {
+        shrink();
+    }
+    else
+    {
+        QLabel::resizeEvent(event);
+    }
+
 
     calculateOffsets();
     updateElidedText();

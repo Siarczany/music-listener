@@ -51,12 +51,12 @@ QStringList ListInput::getList() const
     return list->getList();
 }
 
-NiceLineEdit *ListInput::getInput() const
+NiceLineEdit *ListInput::getNiceLineEdit() const
 {
     return input;
 }
 
-ItemList *ListInput::getListWidget() const
+ItemList *ListInput::getItemList() const
 {
     return list;
 }

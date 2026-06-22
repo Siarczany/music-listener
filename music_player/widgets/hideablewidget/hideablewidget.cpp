@@ -68,7 +68,7 @@ void HideableWidget::setInSightFull(const bool visibility)
 {
     if(visibleFull == visibility)
         return;
-    qDebug() << "setinsightfull";
+    //qDebug() << "setinsightfull";
     label->setVisible(visibility);
     if(visibility == true)
     {
@@ -101,7 +101,7 @@ void HideableWidget::construct()
 
     connect(hidden, &HiddenWidget::sizeChanged,
             this, [this](){
-                qDebug() << visibleFull << visible;
+                //qDebug() << visibleFull << visible;
                 //if(visibleFull && visible)
                 //{
                     //label->setFixedWidth(this->hidden->width());

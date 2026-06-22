@@ -3,25 +3,26 @@
 
 NiceFileEdit::NiceFileEdit(QWidget *parent)
     : QWidget(parent)
-    , file_nle(new NiceLineEdit(this))
-    , select_pb(new QPushButton(this))
+    , niceLineEdit(new NiceLineEdit(this))
+    , pushButton(new QPushButton(this))
     , layout(new QVBoxLayout(this))
 {
+    // layout stuff
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-    layout->addWidget(file_nle, 0, Qt::AlignHCenter);
-    layout->addWidget(select_pb, 0, Qt::AlignHCenter);
+    layout->addWidget(niceLineEdit, 0, Qt::AlignHCenter);
+    layout->addWidget(pushButton, 0, Qt::AlignHCenter);
 
-    select_pb->setText("Wybierz plik");
-    select_pb->setFixedWidth(100);
+    pushButton->setText("Wybierz plik");
+    // select button has fixed size
+    pushButton->setFixedWidth(100);
 
-    connect(select_pb, &QPushButton::clicked, this, [this](){
+    connect(pushButton, &QPushButton::clicked, this, [this](){
         filepath = QFileDialog::getOpenFileName(this, "Open file", filepath, "Audio Files (*.mp3 *.wav);;All Files (*)");
-        //QFileInfo fileName(filepath);
-        file_nle->setText(filepath);
+        niceLineEdit->setText(filepath);
     });
 
-    connect(file_nle, &NiceLineEdit::textChanged, this, &NiceFileEdit::textChanged);
+    connect(niceLineEdit, &NiceLineEdit::textChanged, this, &NiceFileEdit::textChanged);
 }
 
 NiceFileEdit::NiceFileEdit(const QString &text, QWidget *parent)
@@ -38,11 +39,11 @@ NiceFileEdit::~NiceFileEdit()
 
 void NiceFileEdit::setText(const QString &text)
 {
-    file_nle->setLabel(text);
+    niceLineEdit->setLabel(text);
 }
 
 void NiceFileEdit::setToolTip(const QString &text)
 {
-    file_nle->setToolTip(text);
-    select_pb->setToolTip("Wybierz plik");
+    niceLineEdit->setToolTip(text);
+    pushButton->setToolTip("Wybierz plik");
 }

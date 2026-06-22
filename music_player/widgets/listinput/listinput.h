@@ -22,13 +22,15 @@ public:
     void setListLabel(const QString& text);
     void setInSight(const bool visibility);
     QStringList getList() const;
-    NiceLineEdit* getInput() const;
-    ItemList* getListWidget() const;
+    NiceLineEdit* getNiceLineEdit() const;
+    ItemList* getItemList() const;
     HideableWidget* getHideable() const;
 private:
     QVBoxLayout* layout;
+
     NiceLineEdit* input;
     SuggestionLineEdit* suggestionInput;
+
     ItemList* list;
     HideableWidget* hideable;
 

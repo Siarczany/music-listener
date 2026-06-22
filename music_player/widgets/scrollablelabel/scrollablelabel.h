@@ -18,6 +18,8 @@ public:
 
     // shrinks the widget size if text fully fits inside the size
     void shrink();
+
+    void setShrinkInsteadOfResize0(bool value);
 private:
     struct Range
     {
@@ -95,6 +97,15 @@ private:
     //   that means it constantly scrolls by 2 or 3 or more
     // and that means you can't have a scrollAmount because while touch pad scrolling you will go much faster as it receives inputs faster xd
     double scrollSpeed = 1.0/12.0;
+
+    // hideable widget sets fixed width to 0
+    //  because widget can be invisible but layout or the widget itself
+    //  remembers the width and the app window wont resize past the apparantly
+    //  invisible point because the widget/layout prevents it or smth idk
+    // in tag input the label from nicelineedit is used as the label from hideable
+    //  so setting width to 0 hides the label xdd
+    //  this bool will instead of resizing to 0 call shrink()
+    bool shrinkInsteadOfResize0 = false;
 protected:
     // as the widget is meant to be in a form screen resizing is roughly doubled to compensate for being in the middle of a layout
     void resizeEvent(QResizeEvent* event) override;

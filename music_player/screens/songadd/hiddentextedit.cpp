@@ -43,5 +43,5 @@ void HiddenTextEdit::inSight(bool visibility)
         setFixedWidth(hwd.width);
     }
     setVisible(visibility);
-    qDebug() << hwd.width;
+    //qDebug() << hwd.width;
 }

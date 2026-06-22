@@ -7,10 +7,10 @@ TagInput::TagInput(QWidget *parent)
     , hiddenWidget(new HiddenWidget(this, this))
 {
 
-    label = qobject_cast<ClickableLabel*>(getInput()->getLabel());
+    label = qobject_cast<ClickableLabel*>(getNiceLineEdit()->getLabel());
     connect(label, &ClickableLabel::pressed,
             this, [this](){
-        qDebug() << "kliknięto";
+        //qDebug() << "kliknięto";
     });
 
     setInputLabel("Tag");
@@ -64,16 +64,18 @@ void TagInput::inSight(bool visibility)
     if(visibility == false)
     {
         hwd.width = width();
-        //setFixedWidth(0);
-        getInput()->getLineEdit()->setFixedWidth(10);
+
+        // in theory we could set labels' shrinkInsteadOfResize0 to always be true
+        //  because even the line as a resizable widget has a min width
+        //  but yyy idk
+        getNiceLineEdit()->getLabel()->setShrinkInsteadOfResize0(true);
+        setFixedWidth(0);
+        getNiceLineEdit()->getLabel()->setShrinkInsteadOfResize0(false);
     }
     else // visibility == true
     {
-        //setFixedWidth(hwd.width);
+        setFixedWidth(hwd.width);
     }
-    //setVisible(visibility);
-    qDebug() << "hello";
-    //setInSight(visibility);
-    getInput()->getLineEdit()->setVisible(visibility);
+    getNiceLineEdit()->getLineEdit()->setVisible(visibility);
     getHideable()->setVisible(visibility);
 }
