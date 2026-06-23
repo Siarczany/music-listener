@@ -7,6 +7,7 @@
 #include <QMediaPlayer>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include "widgets/hideablewidget/hideablewidget.h"
 
 class VolumeTuneIn : public QWidget
 {
@@ -16,7 +17,19 @@ public:
     ~VolumeTuneIn();
 
     void setMediaPlayer(QMediaPlayer* player);
+
+    HiddenWidget* getHiddenWidget() const;
+protected:
+    void resizeEvent(QResizeEvent *event);
 private:
+    HiddenWidget* hiddenWidget;
+    struct HiddenWidgetData
+    {
+        int width;
+    };
+    HiddenWidgetData hiddenWidgetData;
+    void inSight(bool visibility);
+
     QHBoxLayout* layout;
     QSlider* masterVolume;
 

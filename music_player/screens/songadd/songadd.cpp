@@ -48,7 +48,11 @@ SongAdd::SongAdd(AppState *appState, QWidget *parent, std::shared_ptr<void> recr
     addWidget(test);
 
     SongOptions* so = new SongOptions(this);
-    addWidget(so);
+    //addWidget(so);
+    HideableWidget* hso = new HideableWidget(so, so->getHiddenWidget(), this);
+    hso->setText("Song options");
+    hso->setInSight(false);
+    addWidget(hso);
 
     addBackButton();
 

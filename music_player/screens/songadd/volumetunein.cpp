@@ -9,6 +9,7 @@ VolumeTuneIn::VolumeTuneIn(QWidget *parent)
     , songVolume(new QSlider(Qt::Horizontal, this))
     , songSlider(new QSlider(Qt::Horizontal, this))
     , playButton(new QPushButton(this))
+    , hiddenWidget(new HiddenWidget(this, this))
 {
     layout->setSpacing(0);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -24,6 +25,9 @@ VolumeTuneIn::VolumeTuneIn(QWidget *parent)
 
     layout->addLayout(songLayout);
     layout->addWidget(masterVolume);
+
+    connect(hiddenWidget, &HiddenWidget::inSight,
+            this, &VolumeTuneIn::inSight);
 }
 
 VolumeTuneIn::~VolumeTuneIn()
@@ -34,4 +38,28 @@ VolumeTuneIn::~VolumeTuneIn()
 void VolumeTuneIn::setMediaPlayer(QMediaPlayer *player)
 {
     this->player = player;
+}
+
+HiddenWidget *VolumeTuneIn::getHiddenWidget() const
+{
+    return hiddenWidget;
+}
+
+void VolumeTuneIn::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+    emit hiddenWidget->sizeChanged();
+}
+
+void VolumeTuneIn::inSight(bool visibility)
+{
+    if(visibility == false)
+    {
+        hiddenWidgetData.width = width();
+    }
+    else
+    {
+        setFixedWidth(hiddenWidgetData.width);
+    }
+    setVisible(visibility);
 }
