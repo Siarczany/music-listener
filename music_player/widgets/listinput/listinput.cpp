@@ -37,13 +37,11 @@ void ListInput::setInputLabel(const QString &text)
 
 void ListInput::setListLabel(const QString &text)
 {
+    // list is inside of hideable
     hideable->setText(text);
-    list->setLabelText(text);
-}
 
-void ListInput::setInSight(const bool visibility)
-{
-    hideable->setInSight(visibility);
+    // list text that because we want to display for example "Tags(5)"
+    list->setLabelText(text);
 }
 
 QStringList ListInput::getList() const
@@ -76,15 +74,18 @@ void ListInput::construct()
     layout->addWidget(input, 0, Qt::AlignHCenter);
     layout->addWidget(hideable, 0, Qt::AlignHCenter);
 
-    //setInSight(false);
-    //hideable->setVisible(false);
+    // hide list at start as there aren't any items inside
     hideable->setInSightFull(false);
 
+    // we want to copy the contents of the input to the first list element
+    //  if it wasn't choosen yet
     connect(suggestionInput, &SuggestionLineEdit::textChanged,
             this, [this](){
                 list->addFirst(suggestionInput->text());
                 hideable->setInSightFull(true);
             });
+
+    // pressed enter or choosen from suggestion
     connect(suggestionInput, &SuggestionLineEdit::choosen,
             this, [this](){
                 list->add(suggestionInput->text());
@@ -97,6 +98,8 @@ void ListInput::construct()
                 suggestionInput->clear();
                 hideable->setInSightFull(true);
             });
+
+    // if after deletion list has 0 elements hdie it
     connect(list, &ItemList::deleted,
             this, [this](){
                 if(list->count() == 0)
@@ -104,15 +107,19 @@ void ListInput::construct()
                     hideable->setInSightFull(false);
                 }
             });
+
+    // set inbetween label width
     connect(list, &ItemList::sizeChanged,
             this, [this](){
-                qDebug() << "list changed" << list->width() << hideable->getLabel()->width();
+                //qDebug() << "list changed" << list->width() << hideable->getLabel()->width();
                 setListLabelWidth();
+                emit sizeChanged();
             });
     connect(suggestionInput, &SuggestionLineEdit::sizeChanged,
             this, [this](){
                 //qDebug() << "suggestion changed" << suggestionInput->width() << hideable->getLabel()->width();
                 setListLabelWidth();
+                emit sizeChanged();
             });
 }
 
@@ -124,4 +131,5 @@ void ListInput::setListLabelWidth()
     const int max = std::max(listWidth, inputWidth);
 
     hideable->getLabel()->setFixedWidth(max);
+    setFixedWidth(max);
 }

@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QPushButton>
 
+// list item holds just a text
 class ItemData : public ModelData
 {
 public:
@@ -21,7 +22,9 @@ public:
     void connectToList(ViewBase *list, int index) override;
     ItemWidgetBase* nowy(QWidget *parent, ModelData *data) override;
 signals:
+    // we want the ability to delete things from a list
     void deleted();
+
 private:
     QHBoxLayout* layout;
     QLabel* label;

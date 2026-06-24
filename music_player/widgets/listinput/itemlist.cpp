@@ -13,10 +13,13 @@ ItemList::ItemList(QWidget *parent)
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(view);
 
+    // random ass width
+    // maybe make it resizable in the future
     setFixedWidth(133);
 
     refresh();
 
+    // hidding the widget
     connect(hiddenWidget, &HiddenWidget::inSight,
             this, ItemList::inSight);
 
@@ -27,6 +30,7 @@ ItemList::ItemList(QWidget *parent)
                 emit deleted();
             });
 
+    // ListView can be resized so resize this as well
     connect(view, &ListView::sizeChanged,
             this, [this](){
                 setFixedWidth(view->width());
@@ -51,8 +55,10 @@ int ItemList::count() const
 
 void ItemList::addFirst(const QString &text)
 {
-    if(model->count() > 1)
+    if(model->count() > 1) // >= 2
         return;
+
+    // add or update the first element
     if(model->count() == 0 && firstLockedIn == false)
     {
         ItemData* data = new ItemData();
@@ -71,11 +77,14 @@ void ItemList::addFirst(const QString &text)
 
 void ItemList::add(const QString &text)
 {
+    // first element is added via addFirst so set flag and get out
     if(firstLockedIn == false)
     {
         firstLockedIn = true;
         return;
     }
+
+    // just add new element
     ItemData* data = new ItemData();
     data->name = text;
     model->add(data);

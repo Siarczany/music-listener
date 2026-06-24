@@ -2,7 +2,6 @@
 
 #include "listview.h"
 
-class ListView;
 
 ListItem::ListItem(QWidget *parent, ModelData *data)
     : ItemWidgetBase(parent)

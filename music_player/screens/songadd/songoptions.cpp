@@ -30,10 +30,19 @@ SongOptions::SongOptions(QWidget *parent)
     connect(hiddenWidget, &HiddenWidget::inSight,
             this, &SongOptions::inSight);
     connect(hte->getHiddenWidget(), &HiddenWidget::sizeChanged,
-this, [this](){
+            this, [this](){
         if(hte->width() > width())
         {
             setFixedWidth(hte->width());
+        }
+    });
+
+    connect(tags, &TagInput::sizeChanged,
+            this, [this](){
+        qDebug() << "aaa";
+        if(tags->width() > width())
+        {
+            setFixedWidth(tags->width());
         }
     });
 }
