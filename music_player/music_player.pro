@@ -17,6 +17,7 @@ SOURCES += \
     screens/screen/screen.cpp \
     screens/screen/form.cpp \
     screens/songadd/hiddentextedit.cpp \
+    screens/songadd/slidertest.cpp \
     screens/songadd/songoptions.cpp \
     screens/songadd/taginput.cpp \
     screens/songadd/volumetunein.cpp \
@@ -57,6 +58,7 @@ HEADERS += \
     screens/screen/form.h \
     screens/screens.h \
     screens/songadd/hiddentextedit.h \
+    screens/songadd/slidertest.h \
     screens/songadd/songoptions.h \
     screens/songadd/taginput.h \
     screens/songadd/volumetunein.h \

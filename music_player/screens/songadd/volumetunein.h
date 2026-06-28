@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "widgets/hideablewidget/hideablewidget.h"
+#include "slidertest.h"
 
 class VolumeTuneIn : public QWidget
 {
@@ -37,6 +38,8 @@ private:
     QSlider* songVolume;
     QSlider* songSlider;
     QPushButton* playButton;
+    RangeSlider* multi;
+
 
     QMediaPlayer* player;
 };

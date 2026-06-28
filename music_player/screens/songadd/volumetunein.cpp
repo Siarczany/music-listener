@@ -9,6 +9,7 @@ VolumeTuneIn::VolumeTuneIn(QWidget *parent)
     , songVolume(new QSlider(Qt::Horizontal, this))
     , songSlider(new QSlider(Qt::Horizontal, this))
     , playButton(new QPushButton(this))
+    , multi(new RangeSlider(Qt::Horizontal, this))
     , hiddenWidget(new HiddenWidget(this, this))
 {
     layout->setSpacing(0);
@@ -22,6 +23,7 @@ VolumeTuneIn::VolumeTuneIn(QWidget *parent)
     songLayout->addWidget(songVolume);
     songLayout->addWidget(songSlider);
     songLayout->addWidget(playButton, 0, Qt::AlignHCenter);
+    songLayout->addWidget(multi);
 
     layout->addLayout(songLayout);
     layout->addWidget(masterVolume);
